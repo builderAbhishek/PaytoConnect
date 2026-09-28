@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Customer Analytics | Chaudhary Cafe | PaytoConnect</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="../assets/css/custom.css">
+</head>
+<body class="bg-slate-50 text-slate-900 antialiased min-h-screen flex flex-col">
+
+  <!-- Sidebar Mount Target -->
+  <div id="sidebar-container"></div>
+
+  <!-- Main Content Wrapper -->
+  <div id="main-content-wrapper" class="md:pl-64 flex-1 flex flex-col transition-all duration-300">
+    
+    <!-- Navbar Mount Target -->
+    <div id="navbar-container"></div>
+
+    <!-- Page Content -->
+    <main class="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl w-full mx-auto space-y-6">
+
+      <!-- Header (Requirement 38) -->
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">Analytics</h1>
+            <span class="px-2 py-0.5 text-[10px] font-bold rounded-md bg-amber-50 text-amber-700 border border-amber-200">Demo Data</span>
+          </div>
+          <p class="text-xs sm:text-sm font-medium text-slate-500 mt-1">Footfall trends, local vs outsider splits, and WhatsApp marketing conversion rates.</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="text-xs font-semibold text-slate-500">Chaudhary Cafe & Family Restaurant</span>
+        </div>
+      </div>
+
+      <!-- 4 Core Stats Cards (Requirement 38: Today's Customers, This Week, This Month, Total Customers) -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        
+        <!-- Today's Customers -->
+        <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm">
+          <span class="text-xs font-bold uppercase tracking-wider text-slate-500 block">Today's Customers</span>
+          <div class="mt-2 flex items-baseline gap-2">
+            <h3 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">87</h3>
+            <span class="text-xs font-semibold text-emerald-600">+14% vs avg</span>
+          </div>
+          <p class="text-[11px] text-slate-400 mt-1">Total visits recorded today</p>
+        </div>
+
+        <!-- This Week -->
+        <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm">
+          <span class="text-xs font-bold uppercase tracking-wider text-slate-500 block">This Week</span>
+          <div class="mt-2 flex items-baseline gap-2">
+            <h3 class="text-2xl sm:text-3xl font-extrabold text-indigo-600 tracking-tight">492</h3>
+            <span class="text-xs font-semibold text-emerald-600">+22% growth</span>
+          </div>
+          <p class="text-[11px] text-slate-400 mt-1">Monday to Sunday tally</p>
+        </div>
+
+        <!-- This Month -->
+        <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm">
+          <span class="text-xs font-bold uppercase tracking-wider text-slate-500 block">This Month</span>
+          <div class="mt-2 flex items-baseline gap-2">
+            <h3 class="text-2xl sm:text-3xl font-extrabold text-sky-600 tracking-tight">1,024</h3>
+            <span class="text-xs font-semibold text-emerald-600">+18.5%</span>
+          </div>
+          <p class="text-[11px] text-slate-400 mt-1">Current billing cycle</p>
+        </div>
+
+        <!-- Total Customers -->
+        <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm">
+          <span class="text-xs font-bold uppercase tracking-wider text-slate-500 block">Total Customers</span>
+          <div class="mt-2 flex items-baseline gap-2">
+            <h3 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">1,248</h3>
+            <span class="text-xs font-semibold text-slate-500">All-time</span>
+          </div>
+          <p class="text-[11px] text-slate-400 mt-1">Unique customer contact database</p>
+        </div>
+      </div>
+
+      <!-- 4 Charts (Requirement 38: Customer Growth, Local vs Outsider, Daily Customer Activity, Consent Rate) -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+        <!-- Chart 1: Customer Growth -->
+        <div class="bg-white p-5 sm:p-6 rounded-2xl border border-slate-200/80 shadow-sm">
+          <div class="flex items-center justify-between mb-4">
+            <div>
+              <h3 class="text-sm sm:text-base font-bold text-slate-900">Customer Growth</h3>
+              <p class="text-xs text-slate-500 mt-0.5">Cumulative monthly customer contact database</p>
+            </div>
+            <span class="text-[10px] font-bold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-full">6 Months</span>
+          </div>
+          <div class="h-60 w-full">
+            <canvas id="growthChart"></canvas>
+          </div>
+        </div>
+
+        <!-- Chart 2: Local vs Outsider -->
+        <div class="bg-white p-5 sm:p-6 rounded-2xl border border-slate-200/80 shadow-sm">
+          <div class="flex items-center justify-between mb-4">
+            <div>
+              <h3 class="text-sm sm:text-base font-bold text-slate-900">Local vs Outsider Demographics</h3>
+              <p class="text-xs text-slate-500 mt-0.5">Understanding local diner loyalty vs highway travelers</p>
+            </div>
+          </div>
+          <div class="h-60 w-full flex items-center justify-center">
+            <canvas id="demographicsChart"></canvas>
+          </div>
+        </div>
+
+        <!-- Chart 3: Daily Customer Activity -->
+        <div class="bg-white p-5 sm:p-6 rounded-2xl border border-slate-200/80 shadow-sm">
+          <div class="flex items-center justify-between mb-4">
+            <div>
+              <h3 class="text-sm sm:text-base font-bold text-slate-900">Daily Customer Activity</h3>
+              <p class="text-xs text-slate-500 mt-0.5">Hourly dine-in check-in distribution today</p>
+            </div>
+          </div>
+          <div class="h-60 w-full">
+            <canvas id="dailyActivityChart"></canvas>
+          </div>
+        </div>
+
+        <!-- Chart 4: Marketing Consent Rate -->
+        <div class="bg-white p-5 sm:p-6 rounded-2xl border border-slate-200/80 shadow-sm">
+          <div class="flex items-center justify-between mb-4">
+            <div>
+              <h3 class="text-sm sm:text-base font-bold text-slate-900">Consent Rate (WhatsApp Marketing)</h3>
+              <p class="text-xs text-slate-500 mt-0.5">Percentage of diners opting in for weekend specials</p>
+            </div>
+            <span class="text-xs font-bold text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-lg">58.3% Opt-in</span>
+          </div>
+          <div class="h-60 w-full flex items-center justify-center">
+            <canvas id="consentChart"></canvas>
+          </div>
+        </div>
+
+      </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-auto py-4 px-6 border-t border-slate-200/80 bg-white text-center text-xs text-slate-400">
+      &copy; 2026 PaytoConnect &bull; Developed by <span class="font-bold text-slate-600">ALAG INNOVATIVE SOLUTIONS</span> &bull; Lead: Abhishek Chaudhary
+    </footer>
+  </div>
+
+  <!-- Reusable Scripts -->
+  <script src="../js/store.js"></script>
+  <script src="../js/toast.js"></script>
+  <script src="../js/modal.js"></script>
+  <script src="../js/app.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Initialize App Layout for Restaurant
+      App.init({
+        role: 'restaurant',
+        activeNav: 'rest-analytics',
+        title: 'Analytics',
+        breadcrumb: 'Analytics'
+      });
+
+      // 1. Customer Growth Chart
+      const ctxGrowth = document.getElementById('growthChart');
+      if (ctxGrowth) {
+        new Chart(ctxGrowth, {
+          type: 'line',
+          data: {
+            labels: ['Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar'],
+            datasets: [{
+              label: 'Customers',
+              data: [190, 380, 620, 840, 1060, 1248],
+              borderColor: '#6366f1',
+              backgroundColor: 'rgba(99, 102, 241, 0.1)',
+              fill: true,
+              tension: 0.35,
+              borderWidth: 2.5
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+              y: { beginAtZero: true, grid: { color: '#f1f5f9' }, ticks: { font: { size: 10 } } },
+              x: { grid: { display: false }, ticks: { font: { size: 11, weight: '600' } } }
+            }
+          }
+        });
+      }
+
+      // 2. Demographics Donut
+      const ctxDemo = document.getElementById('demographicsChart');
+      if (ctxDemo) {
+        new Chart(ctxDemo, {
+          type: 'doughnut',
+          data: {
+            labels: ['Local Residents (60%)', 'Highway Outsiders (40%)'],
+            datasets: [{
+              data: [60, 40],
+              backgroundColor: ['#4f46e5', '#f59e0b'],
+              borderWidth: 0
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            cutout: '70%',
+            plugins: {
+              legend: { position: 'bottom', labels: { boxWidth: 10, padding: 12, font: { size: 11, weight: '600' } } }
+            }
+          }
+        });
+      }
+
+      // 3. Daily Hourly Activity Bar Chart
+      const ctxDaily = document.getElementById('dailyActivityChart');
+      if (ctxDaily) {
+        new Chart(ctxDaily, {
+          type: 'bar',
+          data: {
+            labels: ['11 AM', '1 PM', '3 PM', '5 PM', '7 PM', '9 PM', '10 PM'],
+            datasets: [{
+              label: 'Diner Check-ins',
+              data: [8, 22, 14, 18, 31, 26, 9],
+              backgroundColor: '#0ea5e9',
+              borderRadius: 6
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+              y: { beginAtZero: true, grid: { color: '#f1f5f9' }, ticks: { font: { size: 10 } } },
+              x: { grid: { display: false }, ticks: { font: { size: 10, weight: '600' } } }
+            }
+          }
+        });
+      }
+
+      // 4. Marketing Consent Rate Polar/Doughnut
+      const ctxConsent = document.getElementById('consentChart');
+      if (ctxConsent) {
+        new Chart(ctxConsent, {
+          type: 'doughnut',
+          data: {
+            labels: ['WhatsApp Consent Given (58.3%)', 'Consent Declined (41.7%)'],
+            datasets: [{
+              data: [728, 520],
+              backgroundColor: ['#10b981', '#cbd5e1'],
+              borderWidth: 0
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            cutout: '70%',
+            plugins: {
+              legend: { position: 'bottom', labels: { boxWidth: 10, padding: 12, font: { size: 11, weight: '600' } } }
+            }
+          }
+        });
+      }
+    });
+  </script>
+</body>
+</html>

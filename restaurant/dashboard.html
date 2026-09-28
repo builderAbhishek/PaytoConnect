@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Restaurant Dashboard | PaytoConnect</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="../assets/css/custom.css">
+</head>
+<body class="bg-slate-50 text-slate-900 antialiased min-h-screen flex flex-col">
+
+  <!-- Sidebar Mount Target -->
+  <div id="sidebar-container"></div>
+
+  <!-- Main Content Wrapper -->
+  <div id="main-content-wrapper" class="md:pl-64 flex-1 flex flex-col transition-all duration-300">
+    
+    <!-- Navbar Mount Target -->
+    <div id="navbar-container"></div>
+
+    <!-- Page Content -->
+    <main class="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl w-full mx-auto space-y-6">
+
+      <!-- Greeting & Subtitle (Requirement 33) -->
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight" id="greeting-heading">Good Morning, Chaudhary Cafe</h1>
+          <p class="text-xs sm:text-sm font-medium text-slate-500 mt-1">Here's what's happening with your customers today.</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <a href="qr.html" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-xs sm:text-sm font-bold text-white shadow-md shadow-indigo-200 transition-all">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" /></svg>
+            Print Counter QR
+          </a>
+        </div>
+      </div>
+
+      <!-- Stats Row 1 (Requirement 33: Today's Customers 87, Local Customers 52, Outsiders 35, Today's Bill Amount ₹14,280) -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        
+        <!-- Today's Customers -->
+        <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md transition-shadow">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Today's Customers</span>
+            <div class="w-8 h-8 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold">
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            </div>
+          </div>
+          <div class="mt-3 flex items-baseline gap-2">
+            <h3 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight" id="today-cust-count">87</h3>
+            <span class="text-xs font-semibold text-emerald-600 flex items-center gap-0.5">
+              <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 10l7-7m0 0l7 7m-7-7v18" /></svg>
+              +12 today
+            </span>
+          </div>
+          <p class="text-[11px] text-slate-400 mt-1">Diners scanned at counter</p>
+        </div>
+
+        <!-- Local Customers -->
+        <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md transition-shadow">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Local Customers</span>
+            <div class="w-8 h-8 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center">
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>
+            </div>
+          </div>
+          <div class="mt-3 flex items-baseline gap-2">
+            <h3 class="text-2xl sm:text-3xl font-extrabold text-indigo-600 tracking-tight" id="local-cust-count">52</h3>
+            <span class="text-xs font-semibold text-slate-500">60% of daily total</span>
+          </div>
+          <p class="text-[11px] text-slate-400 mt-1">Neighborhood & repeat diners</p>
+        </div>
+
+        <!-- Outsiders -->
+        <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md transition-shadow">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Outsiders</span>
+            <div class="w-8 h-8 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center">
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+            </div>
+          </div>
+          <div class="mt-3 flex items-baseline gap-2">
+            <h3 class="text-2xl sm:text-3xl font-extrabold text-amber-600 tracking-tight" id="outsider-cust-count">35</h3>
+            <span class="text-xs font-semibold text-slate-500">40% of daily total</span>
+          </div>
+          <p class="text-[11px] text-slate-400 mt-1">Highway travelers & visitors</p>
+        </div>
+
+        <!-- Today's Bill Amount -->
+        <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md transition-shadow">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Today's Bill Amount</span>
+            <div class="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold">
+              ₹
+            </div>
+          </div>
+          <div class="mt-3 flex items-baseline gap-2">
+            <h3 class="text-2xl sm:text-3xl font-extrabold text-emerald-600 tracking-tight" id="today-bill-amount">₹14,280</h3>
+            <span class="text-xs font-semibold text-emerald-600 flex items-center gap-0.5">
+              <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 10l7-7m0 0l7 7m-7-7v18" /></svg>
+              +15.2%
+            </span>
+          </div>
+          <p class="text-[11px] text-slate-400 mt-1">Direct to your bank via UPI</p>
+        </div>
+      </div>
+
+      <!-- Second Row Stats (Requirement 33: Total Customers 1,248, Marketing Consent 728) -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div class="bg-gradient-to-r from-indigo-900 to-slate-900 p-5 rounded-2xl text-white shadow-sm flex items-center justify-between">
+          <div>
+            <span class="text-xs font-bold uppercase tracking-wider text-indigo-300">Lifetime Total Customers</span>
+            <h3 class="text-2xl sm:text-3xl font-extrabold mt-1">1,248</h3>
+            <p class="text-xs text-indigo-200 mt-0.5">Unique customer profiles in your restaurant database</p>
+          </div>
+          <div class="w-12 h-12 rounded-2xl bg-white/10 flex items-center justify-center text-white">
+            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+          </div>
+        </div>
+
+        <div class="bg-gradient-to-r from-emerald-800 to-teal-900 p-5 rounded-2xl text-white shadow-sm flex items-center justify-between">
+          <div>
+            <span class="text-xs font-bold uppercase tracking-wider text-emerald-300">Marketing Consent Captured</span>
+            <h3 class="text-2xl sm:text-3xl font-extrabold mt-1">728</h3>
+            <p class="text-xs text-emerald-200 mt-0.5">58.3% diners opted in for WhatsApp weekend specials</p>
+          </div>
+          <div class="w-12 h-12 rounded-2xl bg-white/10 flex items-center justify-center text-white">
+            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Customer Activity Chart (Requirement 34) -->
+      <div class="bg-white p-5 sm:p-6 rounded-2xl border border-slate-200/80 shadow-sm">
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <div class="flex items-center gap-2">
+              <h3 class="text-sm sm:text-base font-bold text-slate-900">Customer Activity</h3>
+              <span class="px-2 py-0.5 text-[10px] font-bold rounded-md bg-amber-50 text-amber-700 border border-amber-200">Demo Data</span>
+            </div>
+            <p class="text-xs text-slate-500 mt-0.5">Last 7 days customer check-ins at Chaudhary Cafe</p>
+          </div>
+          <span class="text-xs font-bold text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-lg">7-Day Trend</span>
+        </div>
+        <div class="h-64 w-full">
+          <canvas id="restActivityChart"></canvas>
+        </div>
+      </div>
+
+      <!-- Recent Customers Section (Requirement 34: Name, Mobile, Type, Amount, Consent, Time, View button) -->
+      <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm overflow-hidden space-y-3 p-5">
+        <div class="flex items-center justify-between">
+          <div>
+            <h3 class="text-sm sm:text-base font-bold text-slate-900">Recent Customers</h3>
+            <p class="text-xs text-slate-500 mt-0.5">Real-time diner check-ins recorded before UPI launch</p>
+          </div>
+          <a href="customers.html" class="text-xs font-bold text-indigo-600 hover:text-indigo-800 transition-colors">
+            View All Customers &rarr;
+          </a>
+        </div>
+
+        <!-- Desktop Table View -->
+        <div class="hidden md:block overflow-x-auto">
+          <table class="w-full text-left text-xs">
+            <thead class="bg-slate-50/80 border-b border-slate-200/80 text-slate-600 font-bold uppercase tracking-wider text-[11px]">
+              <tr>
+                <th class="px-4 py-3">Name</th>
+                <th class="px-4 py-3">Mobile</th>
+                <th class="px-4 py-3">Type</th>
+                <th class="px-4 py-3">Amount</th>
+                <th class="px-4 py-3">Consent</th>
+                <th class="px-4 py-3">Time</th>
+                <th class="px-4 py-3 text-right">Action</th>
+              </tr>
+            </thead>
+            <tbody id="recent-customers-body" class="divide-y divide-slate-100 font-medium text-slate-700">
+              <!-- Dynamically Populated -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Mobile Cards View -->
+        <div id="recent-customers-mobile" class="md:hidden space-y-2.5">
+          <!-- Dynamically Populated -->
+        </div>
+      </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-auto py-4 px-6 border-t border-slate-200/80 bg-white text-center text-xs text-slate-400">
+      &copy; 2026 PaytoConnect &bull; Developed by <span class="font-bold text-slate-600">ALAG INNOVATIVE SOLUTIONS</span> &bull; Lead: Abhishek Chaudhary
+    </footer>
+  </div>
+
+  <!-- Reusable Scripts -->
+  <script src="../js/store.js"></script>
+  <script src="../js/toast.js"></script>
+  <script src="../js/modal.js"></script>
+  <script src="../js/app.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Initialize App Layout for Restaurant
+      App.init({
+        role: 'restaurant',
+        activeNav: 'rest-dashboard',
+        title: 'Dashboard',
+        breadcrumb: 'Overview'
+      });
+
+      // Populate Recent Customers (scoped to chaudhary)
+      const restSlug = 'chaudhary';
+      const customers = Store.getCustomers(restSlug);
+      const recent = customers.slice(0, 6);
+
+      const tableBody = document.getElementById('recent-customers-body');
+      const mobileList = document.getElementById('recent-customers-mobile');
+
+      tableBody.innerHTML = recent.map(c => `
+        <tr class="hover:bg-slate-50/70 transition-colors">
+          <td class="px-4 py-3 font-bold text-slate-900">${c.name}</td>
+          <td class="px-4 py-3 font-mono text-xs text-slate-600">+91 ${c.mobile}</td>
+          <td class="px-4 py-3">
+            <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold ${c.customer_type === 'Local' ? 'bg-indigo-50 text-indigo-700' : 'bg-amber-50 text-amber-700'}">
+              ${c.customer_type}
+            </span>
+          </td>
+          <td class="px-4 py-3 font-bold text-emerald-600">₹${Number(c.bill_amount).toLocaleString('en-IN')}</td>
+          <td class="px-4 py-3">
+            <span class="text-[11px] font-semibold ${c.marketing_consent ? 'text-emerald-700' : 'text-slate-400'}">
+              ${c.marketing_consent ? '✓ Given' : 'Declined'}
+            </span>
+          </td>
+          <td class="px-4 py-3 text-slate-400">${c.date}, ${c.time}</td>
+          <td class="px-4 py-3 text-right">
+            <button type="button" class="btn-view-cust px-3 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-semibold transition-colors" data-id="${c.id}">
+              View
+            </button>
+          </td>
+        </tr>
+      `).join('');
+
+      mobileList.innerHTML = recent.map(c => `
+        <div class="p-3 rounded-xl border border-slate-200/80 bg-slate-50/50 flex items-center justify-between">
+          <div>
+            <h4 class="font-bold text-slate-900 text-xs">${c.name}</h4>
+            <div class="flex items-center gap-2 mt-0.5 text-[11px] text-slate-500">
+              <span>+91 ${c.mobile}</span>
+              <span>&bull;</span>
+              <span class="font-bold text-emerald-600">₹${c.bill_amount}</span>
+            </div>
+            <span class="text-[10px] text-slate-400">${c.date}, ${c.time}</span>
+          </div>
+          <button type="button" class="btn-view-cust px-3 py-1.5 bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 rounded-lg text-xs font-semibold shadow-sm" data-id="${c.id}">
+            View
+          </button>
+        </div>
+      `).join('');
+
+      document.querySelectorAll('.btn-view-cust').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const id = btn.getAttribute('data-id');
+          const target = Store.getCustomers().find(x => x.id === id);
+          if (target) Modal.openCustomerModal(target);
+        });
+      });
+
+      // 7-day Activity Chart
+      const ctx = document.getElementById('restActivityChart');
+      if (ctx) {
+        new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+            datasets: [{
+              label: 'Customers Check-ins',
+              data: [52, 68, 49, 74, 88, 118, 87],
+              borderColor: '#6366f1',
+              backgroundColor: 'rgba(99, 102, 241, 0.1)',
+              fill: true,
+              tension: 0.35,
+              borderWidth: 2.5,
+              pointBackgroundColor: '#6366f1',
+              pointRadius: 4
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { display: false }
+            },
+            scales: {
+              y: {
+                beginAtZero: true,
+                grid: { color: '#f1f5f9' },
+                ticks: { color: '#94a3b8', font: { size: 11 } }
+              },
+              x: {
+                grid: { display: false },
+                ticks: { color: '#64748b', font: { size: 11, weight: '600' } }
+              }
+            }
+          }
+        });
+      }
+    });
+  </script>
+</body>
+</html>

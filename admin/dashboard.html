@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard | PaytoConnect</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Chart.js CDN for Analytics -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="../assets/css/custom.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-slate-50 text-slate-900 antialiased min-h-screen flex flex-col">
+
+  <!-- Sidebar Mount Target -->
+  <div id="sidebar-container"></div>
+
+  <!-- Main Content Wrapper (Margins adjust on desktop when sidebar collapses) -->
+  <div id="main-content-wrapper" class="md:pl-64 flex-1 flex flex-col transition-all duration-300">
+    
+    <!-- Navbar Mount Target -->
+    <div id="navbar-container"></div>
+
+    <!-- Page Content -->
+    <main class="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl w-full mx-auto space-y-6">
+
+      <!-- Top Header & Action Controls (Requirement 26) -->
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">Overview</h1>
+          <p class="text-xs sm:text-sm font-medium text-slate-500 mt-1">Monitor your PaytoConnect platform.</p>
+        </div>
+
+        <!-- Top-Right Date Range / Today Selector -->
+        <div class="flex items-center gap-2">
+          <div class="inline-flex p-1 bg-white border border-slate-200 rounded-xl shadow-sm text-xs font-semibold text-slate-700">
+            <button type="button" class="date-filter-btn px-3 py-1.5 rounded-lg bg-indigo-50 text-indigo-600 font-bold" data-range="today">Today</button>
+            <button type="button" class="date-filter-btn px-3 py-1.5 rounded-lg hover:text-slate-900 transition-colors" data-range="7d">Last 7 Days</button>
+            <button type="button" class="date-filter-btn px-3 py-1.5 rounded-lg hover:text-slate-900 transition-colors" data-range="30d">Last 30 Days</button>
+          </div>
+          <button id="refresh-stats-btn" class="p-2.5 bg-white border border-slate-200 hover:bg-slate-50 text-slate-600 rounded-xl shadow-sm transition-colors" title="Refresh Live Data" aria-label="Refresh Data">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- 4 Core Stats Cards (Requirement 26) -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        
+        <!-- Total Restaurants -->
+        <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Total Restaurants</span>
+            <div class="w-9 h-9 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center">
+              <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
+            </div>
+          </div>
+          <div class="mt-3 flex items-baseline gap-2">
+            <h3 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight" id="stat-total-restaurants">24</h3>
+            <span class="text-xs font-semibold text-emerald-600 flex items-center gap-0.5">
+              <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 10l7-7m0 0l7 7m-7-7v18" /></svg>
+              +3 this wk
+            </span>
+          </div>
+          <p class="text-[11px] text-slate-400 mt-1">Active verified merchant outlets</p>
+        </div>
+
+        <!-- Total Customers -->
+        <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Total Customers</span>
+            <div class="w-9 h-9 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center">
+              <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+            </div>
+          </div>
+          <div class="mt-3 flex items-baseline gap-2">
+            <h3 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight" id="stat-total-customers">1,248</h3>
+            <span class="text-xs font-semibold text-emerald-600 flex items-center gap-0.5">
+              <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 10l7-7m0 0l7 7m-7-7v18" /></svg>
+              +14%
+            </span>
+          </div>
+          <p class="text-[11px] text-slate-400 mt-1">Unique diners captured across all QRs</p>
+        </div>
+
+        <!-- Today's Customers -->
+        <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Today's Customers</span>
+            <div class="w-9 h-9 rounded-xl bg-violet-50 text-violet-600 flex items-center justify-center">
+              <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            </div>
+          </div>
+          <div class="mt-3 flex items-baseline gap-2">
+            <h3 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight" id="stat-today-customers">87</h3>
+            <span class="text-xs font-semibold text-emerald-600 flex items-center gap-0.5">
+              <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 10l7-7m0 0l7 7m-7-7v18" /></svg>
+              Live
+            </span>
+          </div>
+          <p class="text-[11px] text-slate-400 mt-1">Check-ins since midnight today</p>
+        </div>
+
+        <!-- Today's Bill Amount -->
+        <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Today's Bill Amount</span>
+            <div class="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold">
+              ₹
+            </div>
+          </div>
+          <div class="mt-3 flex items-baseline gap-2">
+            <h3 class="text-2xl sm:text-3xl font-extrabold text-emerald-600 tracking-tight" id="stat-today-amount">₹24,580</h3>
+            <span class="text-xs font-semibold text-emerald-600 flex items-center gap-0.5">
+              <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 10l7-7m0 0l7 7m-7-7v18" /></svg>
+              +18.4%
+            </span>
+          </div>
+          <p class="text-[11px] text-slate-400 mt-1">0% commission &bull; Direct to banks</p>
+        </div>
+      </div>
+
+      <!-- Analytics Charts Section (Requirement 27) -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        
+        <!-- Customer Activity (7-Day Chart) -->
+        <div class="lg:col-span-2 bg-white p-5 sm:p-6 rounded-2xl border border-slate-200/80 shadow-sm">
+          <div class="flex items-center justify-between mb-4">
+            <div>
+              <div class="flex items-center gap-2">
+                <h3 class="text-sm sm:text-base font-bold text-slate-900">Customer Activity</h3>
+                <span class="px-2 py-0.5 text-[10px] font-bold rounded-md bg-amber-50 text-amber-700 border border-amber-200">Demo Data</span>
+              </div>
+              <p class="text-xs text-slate-500 mt-0.5">Daily customer check-ins over the last 7 days</p>
+            </div>
+          </div>
+          <div class="h-64 sm:h-72 w-full">
+            <canvas id="activityChart"></canvas>
+          </div>
+        </div>
+
+        <!-- Local vs Outsider (Donut Chart) -->
+        <div class="bg-white p-5 sm:p-6 rounded-2xl border border-slate-200/80 shadow-sm flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <div>
+                <div class="flex items-center gap-2">
+                  <h3 class="text-sm sm:text-base font-bold text-slate-900">Local vs Outsider</h3>
+                  <span class="px-2 py-0.5 text-[10px] font-bold rounded-md bg-amber-50 text-amber-700 border border-amber-200">Demo Data</span>
+                </div>
+                <p class="text-xs text-slate-500 mt-0.5">Demographic customer split</p>
+              </div>
+            </div>
+            <div class="h-52 w-full flex items-center justify-center">
+              <canvas id="demographicsChart"></canvas>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-3 pt-4 border-t border-slate-100 text-center">
+            <div class="p-2 rounded-xl bg-slate-50">
+              <span class="text-[11px] font-semibold text-indigo-600 block">Local Neighbors</span>
+              <span class="text-base font-bold text-slate-900">62% (774)</span>
+            </div>
+            <div class="p-2 rounded-xl bg-slate-50">
+              <span class="text-[11px] font-semibold text-amber-600 block">Travelers / Outsiders</span>
+              <span class="text-base font-bold text-slate-900">38% (474)</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Customer Growth (Simple Line Chart) & Quick Links -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        
+        <!-- Customer Growth Line Chart -->
+        <div class="lg:col-span-2 bg-white p-5 sm:p-6 rounded-2xl border border-slate-200/80 shadow-sm">
+          <div class="flex items-center justify-between mb-4">
+            <div>
+              <div class="flex items-center gap-2">
+                <h3 class="text-sm sm:text-base font-bold text-slate-900">Customer Growth</h3>
+                <span class="px-2 py-0.5 text-[10px] font-bold rounded-md bg-amber-50 text-amber-700 border border-amber-200">Demo Data</span>
+              </div>
+              <p class="text-xs text-slate-500 mt-0.5">Cumulative monthly customer contact acquisition</p>
+            </div>
+          </div>
+          <div class="h-56 sm:h-64 w-full">
+            <canvas id="growthChart"></canvas>
+          </div>
+        </div>
+
+        <!-- System Status & Quick Actions -->
+        <div class="bg-white p-5 sm:p-6 rounded-2xl border border-slate-200/80 shadow-sm flex flex-col justify-between space-y-4">
+          <div>
+            <h3 class="text-sm sm:text-base font-bold text-slate-900 mb-1">Platform Operations</h3>
+            <p class="text-xs text-slate-500">Quick shortcuts to manage PaytoConnect.</p>
+
+            <div class="mt-4 space-y-2.5">
+              <a href="restaurants.html" class="flex items-center justify-between p-3 rounded-xl border border-slate-200/80 hover:border-indigo-200 hover:bg-indigo-50/30 transition-all group">
+                <div class="flex items-center gap-3">
+                  <div class="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center group-hover:bg-indigo-600 group-hover:text-white transition-colors">
+                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" /></svg>
+                  </div>
+                  <div>
+                    <h4 class="text-xs font-bold text-slate-800">Add New Restaurant</h4>
+                    <p class="text-[11px] text-slate-400">Onboard merchant & configure UPI</p>
+                  </div>
+                </div>
+                <svg class="w-4 h-4 text-slate-400 group-hover:text-indigo-600 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+              </a>
+
+              <a href="customers.html" class="flex items-center justify-between p-3 rounded-xl border border-slate-200/80 hover:border-indigo-200 hover:bg-indigo-50/30 transition-all group">
+                <div class="flex items-center gap-3">
+                  <div class="w-8 h-8 rounded-lg bg-sky-50 text-sky-600 flex items-center justify-center group-hover:bg-sky-600 group-hover:text-white transition-colors">
+                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
+                  </div>
+                  <div>
+                    <h4 class="text-xs font-bold text-slate-800">View Global Customers</h4>
+                    <p class="text-[11px] text-slate-400">Search diners & marketing opt-ins</p>
+                  </div>
+                </div>
+                <svg class="w-4 h-4 text-slate-400 group-hover:text-sky-600 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+              </a>
+
+              <a href="../scan.html?restaurant=chaudhary" target="_blank" class="flex items-center justify-between p-3 rounded-xl border border-slate-200/80 hover:border-indigo-200 hover:bg-indigo-50/30 transition-all group">
+                <div class="flex items-center gap-3">
+                  <div class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center group-hover:bg-emerald-600 group-hover:text-white transition-colors">
+                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" /></svg>
+                  </div>
+                  <div>
+                    <h4 class="text-xs font-bold text-slate-800">Test Customer QR Flow</h4>
+                    <p class="text-[11px] text-slate-400">Launch live payment test screen</p>
+                  </div>
+                </div>
+                <svg class="w-4 h-4 text-slate-400 group-hover:text-emerald-600 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+              </a>
+            </div>
+          </div>
+
+          <div class="p-3 bg-slate-50 rounded-xl border border-slate-200/60 text-[11px] text-slate-500">
+            <span class="font-bold text-slate-700 block">System Health: 100% Operational</span>
+            Zero payment gateway dependencies. NPCI direct UPI routing.
+          </div>
+        </div>
+
+      </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-auto py-4 px-6 border-t border-slate-200/80 bg-white text-center text-xs text-slate-400">
+      &copy; 2026 PaytoConnect &bull; Developed by <span class="font-bold text-slate-600">ALAG INNOVATIVE SOLUTIONS</span> &bull; Lead: Abhishek Chaudhary
+    </footer>
+  </div>
+
+  <!-- Reusable Scripts -->
+  <script src="../js/store.js"></script>
+  <script src="../js/toast.js"></script>
+  <script src="../js/modal.js"></script>
+  <script src="../js/app.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Initialize App Layout (Active nav: 'admin-dashboard')
+      App.init({
+        role: 'admin',
+        activeNav: 'admin-dashboard',
+        title: 'Overview',
+        breadcrumb: 'Overview'
+      });
+
+      // Refresh Stats from Store
+      function loadStats() {
+        const rests = Store.getRestaurants();
+        const custs = Store.getCustomers();
+        const totalRestsEl = document.getElementById('stat-total-restaurants');
+        if (totalRestsEl) totalRestsEl.textContent = rests.length ? (rests.length + 21) : '24'; // Seed + simulated network
+        
+        // Date range button toggling
+        document.querySelectorAll('.date-filter-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            document.querySelectorAll('.date-filter-btn').forEach(b => {
+              b.classList.remove('bg-indigo-50', 'text-indigo-600', 'font-bold');
+            });
+            btn.classList.add('bg-indigo-50', 'text-indigo-600', 'font-bold');
+            Toast.info(`Showing stats for: ${btn.textContent}`);
+          });
+        });
+
+        document.getElementById('refresh-stats-btn')?.addEventListener('click', () => {
+          Toast.success('Dashboard metrics refreshed.');
+        });
+      }
+
+      loadStats();
+
+      // Render Charts using Chart.js (Requirement 27)
+      // 1. Customer Activity Chart (7 Days)
+      const ctxActivity = document.getElementById('activityChart');
+      if (ctxActivity) {
+        new Chart(ctxActivity, {
+          type: 'bar',
+          data: {
+            labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+            datasets: [{
+              label: 'Customers Check-ins',
+              data: [62, 74, 58, 81, 95, 142, 126],
+              backgroundColor: '#6366f1',
+              borderRadius: 8,
+              borderSkipped: false
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { display: false },
+              tooltip: {
+                backgroundColor: '#0f172a',
+                padding: 10,
+                cornerRadius: 8,
+                titleFont: { size: 12, weight: 'bold' },
+                bodyFont: { size: 12 }
+              }
+            },
+            scales: {
+              y: {
+                beginAtZero: true,
+                grid: { color: '#f1f5f9' },
+                ticks: { color: '#94a3b8', font: { size: 11 } }
+              },
+              x: {
+                grid: { display: false },
+                ticks: { color: '#64748b', font: { size: 11, weight: '600' } }
+              }
+            }
+          }
+        });
+      }
+
+      // 2. Demographics Donut Chart
+      const ctxDemo = document.getElementById('demographicsChart');
+      if (ctxDemo) {
+        new Chart(ctxDemo, {
+          type: 'doughnut',
+          data: {
+            labels: ['Local Residents', 'Highway / Outsiders'],
+            datasets: [{
+              data: [62, 38],
+              backgroundColor: ['#6366f1', '#f59e0b'],
+              borderWidth: 0
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            cutout: '72%',
+            plugins: {
+              legend: {
+                position: 'bottom',
+                labels: { boxWidth: 10, padding: 12, font: { size: 11, weight: '600' }, color: '#475569' }
+              }
+            }
+          }
+        });
+      }
+
+      // 3. Customer Growth Line Chart
+      const ctxGrowth = document.getElementById('growthChart');
+      if (ctxGrowth) {
+        new Chart(ctxGrowth, {
+          type: 'line',
+          data: {
+            labels: ['Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar'],
+            datasets: [{
+              label: 'Total Customers',
+              data: [210, 430, 680, 890, 1080, 1248],
+              borderColor: '#0284c7',
+              backgroundColor: 'rgba(2, 132, 199, 0.08)',
+              fill: true,
+              tension: 0.35,
+              borderWidth: 2.5,
+              pointBackgroundColor: '#0284c7',
+              pointRadius: 4
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { display: false },
+              tooltip: {
+                backgroundColor: '#0f172a',
+                padding: 10,
+                cornerRadius: 8
+              }
+            },
+            scales: {
+              y: {
+                beginAtZero: true,
+                grid: { color: '#f1f5f9' },
+                ticks: { color: '#94a3b8', font: { size: 11 } }
+              },
+              x: {
+                grid: { display: false },
+                ticks: { color: '#64748b', font: { size: 11, weight: '600' } }
+              }
+            }
+          }
+        });
+      }
+    });
+  </script>
+</body>
+</html>

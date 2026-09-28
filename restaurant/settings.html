@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Restaurant Settings | Chaudhary Cafe | PaytoConnect</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="../assets/css/custom.css">
+</head>
+<body class="bg-slate-50 text-slate-900 antialiased min-h-screen flex flex-col">
+
+  <!-- Sidebar Mount Target -->
+  <div id="sidebar-container"></div>
+
+  <!-- Main Content Wrapper -->
+  <div id="main-content-wrapper" class="md:pl-64 flex-1 flex flex-col transition-all duration-300">
+    
+    <!-- Navbar Mount Target -->
+    <div id="navbar-container"></div>
+
+    <!-- Page Content -->
+    <main class="flex-1 p-4 sm:p-6 lg:p-8 max-w-4xl w-full mx-auto space-y-6">
+
+      <!-- Heading -->
+      <div>
+        <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">Restaurant Settings</h1>
+        <p class="text-xs sm:text-sm font-medium text-slate-500 mt-1">Configure profile details, payment settlement UPI ID, and counter QR branding.</p>
+      </div>
+
+      <!-- Settings Form -->
+      <form id="settings-form" class="space-y-6">
+
+        <!-- Section 1: Restaurant Information (Requirement 39: Name, Address, Phone, Description) -->
+        <div class="bg-white p-5 sm:p-6 rounded-2xl border border-slate-200/80 shadow-sm space-y-4">
+          <div class="flex items-center gap-2 pb-3 border-b border-slate-100">
+            <svg class="w-5 h-5 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
+            <h3 class="text-sm sm:text-base font-bold text-slate-900">Restaurant Information</h3>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Restaurant Legal Name *</label>
+            <input type="text" id="setting-name" required class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm font-medium text-slate-800 focus:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600">
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Contact Phone *</label>
+              <input type="text" id="setting-phone" required class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm font-medium text-slate-800 focus:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600">
+            </div>
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Physical Location / Address *</label>
+              <input type="text" id="setting-address" required class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm font-medium text-slate-800 focus:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600">
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Description / Tagline</label>
+            <textarea id="setting-desc" rows="2" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm font-medium text-slate-800 focus:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600"></textarea>
+          </div>
+        </div>
+
+        <!-- Section 2: Payment Information (Requirement 39: UPI ID) -->
+        <div class="bg-white p-5 sm:p-6 rounded-2xl border border-slate-200/80 shadow-sm space-y-4">
+          <div class="flex items-center gap-2 pb-3 border-b border-slate-100">
+            <svg class="w-5 h-5 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+            <h3 class="text-sm sm:text-base font-bold text-slate-900">Payment Information</h3>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Settlement UPI ID *</label>
+            <div class="relative">
+              <input type="text" id="setting-upi" required class="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm font-mono font-bold text-emerald-700 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-600">
+              <span class="absolute left-3.5 top-2.5 text-xs font-bold text-slate-400">@</span>
+            </div>
+            <p class="text-[11px] text-slate-400 mt-1">Diners' payments via GPay, PhonePe, Paytm, or BHIM settle 100% directly to this bank VPA with 0% platform commission.</p>
+          </div>
+        </div>
+
+        <!-- Section 3: Branding & Logo (Requirement 39: Logo) -->
+        <div class="bg-white p-5 sm:p-6 rounded-2xl border border-slate-200/80 shadow-sm space-y-4">
+          <div class="flex items-center gap-2 pb-3 border-b border-slate-100">
+            <svg class="w-5 h-5 text-sky-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+            <h3 class="text-sm sm:text-base font-bold text-slate-900">Branding & Logo</h3>
+          </div>
+
+          <div class="flex items-center gap-4">
+            <img id="logo-preview" src="" alt="Logo Preview" class="w-14 h-14 rounded-2xl object-cover border border-slate-200 shrink-0">
+            <div class="flex-1">
+              <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Logo Image URL</label>
+              <input type="url" id="setting-logo" placeholder="https://..." class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm font-medium text-slate-800 focus:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600">
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 4: QR Information (Requirement 39: Slug, Customer Page URL) -->
+        <div class="bg-white p-5 sm:p-6 rounded-2xl border border-slate-200/80 shadow-sm space-y-4">
+          <div class="flex items-center gap-2 pb-3 border-b border-slate-100">
+            <svg class="w-5 h-5 text-violet-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" /></svg>
+            <h3 class="text-sm sm:text-base font-bold text-slate-900">QR Information</h3>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Outlet Slug Identifier</label>
+            <input type="text" id="setting-slug" readonly class="w-full px-3.5 py-2.5 bg-slate-100 border border-slate-200 rounded-xl text-xs sm:text-sm font-mono text-slate-600 cursor-not-allowed">
+            <p class="text-[11px] text-slate-400 mt-1">Slug is locked to preserve printed counter standees.</p>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Customer Page URL</label>
+            <div class="flex items-center gap-2">
+              <input type="text" id="setting-cust-url" readonly class="w-full px-3.5 py-2.5 bg-slate-100 border border-slate-200 rounded-xl text-xs sm:text-sm font-mono font-semibold text-indigo-600 select-all cursor-text">
+              <a id="btn-visit-url" href="#" target="_blank" class="p-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-600 transition-colors" title="Open Page">
+                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Action Buttons (Requirement 39: Save Changes, Reset) -->
+        <div class="flex items-center justify-end gap-3 pt-2">
+          <button type="button" id="btn-reset" class="px-5 py-2.5 rounded-xl border border-slate-200 text-xs sm:text-sm font-bold text-slate-600 hover:bg-slate-50 transition-colors">
+            Reset
+          </button>
+          <button type="submit" class="px-6 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-xs sm:text-sm font-bold text-white shadow-md shadow-indigo-200 transition-all hover:scale-[1.02] active:scale-[0.98]">
+            Save Changes
+          </button>
+        </div>
+
+      </form>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-auto py-4 px-6 border-t border-slate-200/80 bg-white text-center text-xs text-slate-400">
+      &copy; 2026 PaytoConnect &bull; Developed by <span class="font-bold text-slate-600">ALAG INNOVATIVE SOLUTIONS</span> &bull; Lead: Abhishek Chaudhary
+    </footer>
+  </div>
+
+  <!-- Reusable Scripts -->
+  <script src="../js/store.js"></script>
+  <script src="../js/toast.js"></script>
+  <script src="../js/modal.js"></script>
+  <script src="../js/app.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Initialize App Layout for Restaurant
+      App.init({
+        role: 'restaurant',
+        activeNav: 'rest-settings',
+        title: 'Settings',
+        breadcrumb: 'Restaurant Settings'
+      });
+
+      const restSlug = 'chaudhary';
+      let currentRest = Store.getRestaurantBySlug(restSlug);
+
+      const nameInput = document.getElementById('setting-name');
+      const phoneInput = document.getElementById('setting-phone');
+      const addressInput = document.getElementById('setting-address');
+      const descInput = document.getElementById('setting-desc');
+      const upiInput = document.getElementById('setting-upi');
+      const logoInput = document.getElementById('setting-logo');
+      const logoPreview = document.getElementById('logo-preview');
+      const slugInput = document.getElementById('setting-slug');
+      const custUrlInput = document.getElementById('setting-cust-url');
+      const btnVisit = document.getElementById('btn-visit-url');
+
+      function populateFields() {
+        if (!currentRest) return;
+        nameInput.value = currentRest.name || '';
+        phoneInput.value = currentRest.phone || '';
+        addressInput.value = currentRest.address || '';
+        descInput.value = currentRest.description || '';
+        upiInput.value = currentRest.upi_id || '';
+        logoInput.value = currentRest.logo || '';
+        logoPreview.src = currentRest.logo || 'https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=150&auto=format&fit=crop&q=80';
+        slugInput.value = currentRest.slug || '';
+
+        const fullUrl = new URL(`../scan.html?restaurant=${encodeURIComponent(currentRest.slug)}`, window.location.href).href;
+        custUrlInput.value = fullUrl;
+        btnVisit.href = fullUrl;
+      }
+
+      populateFields();
+
+      // Live logo preview
+      logoInput.addEventListener('input', () => {
+        logoPreview.src = logoInput.value || 'https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=150&auto=format&fit=crop&q=80';
+      });
+
+      // Reset Button
+      document.getElementById('btn-reset').addEventListener('click', () => {
+        populateFields();
+        Toast.info('Form reset to saved values.');
+      });
+
+      // Save Changes Form Submit (Requirement 39: Show toast "Changes saved successfully.")
+      document.getElementById('settings-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const updated = Store.saveRestaurant({
+          ...currentRest,
+          name: nameInput.value.trim(),
+          phone: phoneInput.value.trim(),
+          address: addressInput.value.trim(),
+          description: descInput.value.trim(),
+          upi_id: upiInput.value.trim(),
+          logo: logoInput.value.trim()
+        });
+
+        currentRest = updated;
+        Toast.success('Changes saved successfully.');
+      });
+    });
+  </script>
+</body>
+</html>

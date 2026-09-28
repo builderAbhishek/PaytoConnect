@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PaytoConnect QR & Standee | Chaudhary Cafe</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Custom CSS with Print Stylesheet -->
+  <link rel="stylesheet" href="../assets/css/custom.css">
+</head>
+<body class="bg-slate-50 text-slate-900 antialiased min-h-screen flex flex-col">
+
+  <!-- Sidebar Mount Target (Hidden when printing) -->
+  <div id="sidebar-container" class="no-print"></div>
+
+  <!-- Main Content Wrapper -->
+  <div id="main-content-wrapper" class="md:pl-64 flex-1 flex flex-col transition-all duration-300">
+    
+    <!-- Navbar Mount Target (Hidden when printing) -->
+    <div id="navbar-container" class="no-print"></div>
+
+    <!-- Page Content -->
+    <main class="flex-1 p-4 sm:p-6 lg:p-8 max-w-5xl w-full mx-auto space-y-8">
+
+      <!-- Header (Requirement 37) -->
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 no-print">
+        <div>
+          <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">Your PaytoConnect QR</h1>
+          <p class="text-xs sm:text-sm font-medium text-slate-500 mt-1">Customers scan this QR to enter their details before payment.</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <button id="btn-print-standee" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-xs sm:text-sm font-bold text-white shadow-md transition-all">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" /></svg>
+            Print Standee (A5/A6)
+          </button>
+        </div>
+      </div>
+
+      <!-- Center: Printable Counter QR Standee Section (Requirement 37) -->
+      <div class="flex justify-center">
+        
+        <div id="printable-standee" class="bg-white rounded-3xl border-2 border-slate-900/10 shadow-2xl p-8 max-w-sm w-full text-center relative overflow-hidden transition-all duration-300">
+          
+          <!-- Top Acrylic Standee Branding Header -->
+          <div class="space-y-1 mb-6">
+            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-50 border border-indigo-200 text-indigo-700 text-[11px] font-bold tracking-wide uppercase">
+              <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
+              Zero Fee &bull; Direct UPI
+            </div>
+            <h2 class="text-xl font-extrabold text-slate-900 tracking-tight" id="standee-restaurant-name">Chaudhary Cafe & Family Restaurant</h2>
+            <p class="text-xs text-slate-500 font-medium" id="standee-restaurant-address">Gadakul, Shohratgarh, Siddharthnagar</p>
+          </div>
+
+          <!-- Large Dynamic QR Code Container -->
+          <div class="p-4 bg-white rounded-2xl border-2 border-slate-900/80 inline-block shadow-inner relative group">
+            <img id="qr-image" src="" alt="Counter QR Code" class="w-56 h-56 mx-auto object-contain transition-transform group-hover:scale-[1.02]">
+            <div class="absolute inset-0 flex items-center justify-center bg-white/90 opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl no-print">
+              <span class="text-xs font-bold text-slate-900">Scan to Check-in</span>
+            </div>
+          </div>
+
+          <!-- Standee Footer & URL info -->
+          <div class="mt-6 space-y-2">
+            <p class="text-xs font-semibold text-slate-700">Scan &bull; Enter Details &bull; Pay via UPI</p>
+            <div class="p-2.5 bg-slate-50 rounded-xl border border-slate-200 font-mono text-xs text-indigo-600 font-bold break-all select-all" id="standee-url-preview">
+              scan.html?restaurant=chaudhary
+            </div>
+            <p class="text-[11px] text-slate-400">Accepted UPI: GPay, PhonePe, Paytm, BHIM, Cred</p>
+          </div>
+
+          <!-- Standee Trademark Watermark -->
+          <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-center gap-1.5 text-[10px] text-slate-400 font-semibold">
+            <span>Powered by</span>
+            <span class="text-indigo-600 font-bold">PaytoConnect</span>
+            <span>&bull;</span>
+            <span>ALAG INNOVATIVE SOLUTIONS</span>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Action Buttons (Requirement 37: Copy Link, Download QR, Open Customer Page) -->
+      <div class="flex flex-wrap items-center justify-center gap-3 no-print">
+        <button id="btn-copy-link" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white border border-slate-200 text-xs sm:text-sm font-bold text-slate-700 hover:bg-slate-50 shadow-sm transition-colors">
+          <svg class="w-4 h-4 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" /></svg>
+          Copy Link
+        </button>
+
+        <button id="btn-download-qr" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white border border-slate-200 text-xs sm:text-sm font-bold text-slate-700 hover:bg-slate-50 shadow-sm transition-colors">
+          <svg class="w-4 h-4 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
+          Download QR
+        </button>
+
+        <a id="btn-open-page" href="../scan.html?restaurant=chaudhary" target="_blank" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-xs sm:text-sm font-bold text-white shadow-md shadow-indigo-200 transition-colors">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+          Open Customer Page
+        </a>
+      </div>
+
+      <!-- How it works Section (Requirement 37: Scan → Enter Details → Pay → Customer Saved) -->
+      <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm space-y-4 no-print">
+        <h3 class="text-sm sm:text-base font-bold text-slate-900">How It Works</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-4 gap-4 text-center">
+          <div class="p-4 rounded-xl bg-slate-50 border border-slate-100 space-y-2">
+            <div class="w-9 h-9 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-xs mx-auto">1</div>
+            <h4 class="font-bold text-xs text-slate-900">Scan</h4>
+            <p class="text-[11px] text-slate-500">Customer scans the counter QR via phone camera or Google Lens.</p>
+          </div>
+          <div class="p-4 rounded-xl bg-slate-50 border border-slate-100 space-y-2">
+            <div class="w-9 h-9 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-xs mx-auto">2</div>
+            <h4 class="font-bold text-xs text-slate-900">Enter Details</h4>
+            <p class="text-[11px] text-slate-500">Diner inputs name, mobile number, demographic type, and bill amount.</p>
+          </div>
+          <div class="p-4 rounded-xl bg-slate-50 border border-slate-100 space-y-2">
+            <div class="w-9 h-9 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center font-bold text-xs mx-auto">3</div>
+            <h4 class="font-bold text-xs text-slate-900">Pay via UPI</h4>
+            <p class="text-[11px] text-slate-500">One-tap redirect directly opens GPay, PhonePe, Paytm, or BHIM.</p>
+          </div>
+          <div class="p-4 rounded-xl bg-slate-50 border border-slate-100 space-y-2">
+            <div class="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center font-bold text-xs mx-auto">4</div>
+            <h4 class="font-bold text-xs text-slate-900">Customer Saved</h4>
+            <p class="text-[11px] text-slate-500">Profile saved to your CRM before launch. 0% platform commission.</p>
+          </div>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-auto py-4 px-6 border-t border-slate-200/80 bg-white text-center text-xs text-slate-400 no-print">
+      &copy; 2026 PaytoConnect &bull; Developed by <span class="font-bold text-slate-600">ALAG INNOVATIVE SOLUTIONS</span> &bull; Lead: Abhishek Chaudhary
+    </footer>
+  </div>
+
+  <!-- Reusable Scripts -->
+  <script src="../js/store.js"></script>
+  <script src="../js/toast.js"></script>
+  <script src="../js/modal.js"></script>
+  <script src="../js/app.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Initialize App Layout for Restaurant
+      App.init({
+        role: 'restaurant',
+        activeNav: 'rest-qr',
+        title: 'My QR',
+        breadcrumb: 'My QR'
+      });
+
+      const restSlug = 'chaudhary';
+      const r = Store.getRestaurantBySlug(restSlug);
+
+      if (r) {
+        document.getElementById('standee-restaurant-name').textContent = r.name;
+        document.getElementById('standee-restaurant-address').textContent = r.address;
+      }
+
+      // Generate dynamic target URL based on current host & path
+      const scanUrl = new URL(`../scan.html?restaurant=${encodeURIComponent(restSlug)}`, window.location.href).href;
+      document.getElementById('standee-url-preview').textContent = scanUrl;
+
+      // QR Code Generator API
+      const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&margin=10&data=${encodeURIComponent(scanUrl)}`;
+      const qrImg = document.getElementById('qr-image');
+      qrImg.src = qrApiUrl;
+
+      // Copy Link Button
+      document.getElementById('btn-copy-link').addEventListener('click', () => {
+        navigator.clipboard.writeText(scanUrl).then(() => {
+          Toast.success('QR link copied to clipboard.');
+        }).catch(() => {
+          Toast.error('Could not copy link.');
+        });
+      });
+
+      // Download QR Image Button
+      document.getElementById('btn-download-qr').addEventListener('click', () => {
+        fetch(qrApiUrl)
+          .then(res => res.blob())
+          .then(blob => {
+            const blobUrl = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = blobUrl;
+            a.download = `PaytoConnect_QR_${restSlug}.png`;
+            a.click();
+            URL.revokeObjectURL(blobUrl);
+            Toast.success('QR Code image downloaded.');
+          })
+          .catch(() => {
+            window.open(qrApiUrl, '_blank');
+          });
+      });
+
+      // Print Standee Button
+      document.getElementById('btn-print-standee').addEventListener('click', () => {
+        window.print();
+      });
+    });
+  </script>
+</body>
+</html>

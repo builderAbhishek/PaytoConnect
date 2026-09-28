@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Restaurants Management | PaytoConnect</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="../assets/css/custom.css">
+</head>
+<body class="bg-slate-50 text-slate-900 antialiased min-h-screen flex flex-col">
+
+  <!-- Sidebar Mount Target -->
+  <div id="sidebar-container"></div>
+
+  <!-- Main Content Wrapper -->
+  <div id="main-content-wrapper" class="md:pl-64 flex-1 flex flex-col transition-all duration-300">
+    
+    <!-- Navbar Mount Target -->
+    <div id="navbar-container"></div>
+
+    <!-- Page Content -->
+    <main class="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl w-full mx-auto space-y-6">
+
+      <!-- Header & Primary Add Button (Requirement 28) -->
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">Restaurants</h1>
+          <p class="text-xs sm:text-sm font-medium text-slate-500 mt-1">Manage onboarded outlets, UPI routing, and standee profiles.</p>
+        </div>
+        <button id="btn-add-restaurant" class="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-xs sm:text-sm font-bold text-white shadow-md shadow-indigo-200 transition-all hover:scale-[1.02] active:scale-[0.98]">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4" /></svg>
+          + Add Restaurant
+        </button>
+      </div>
+
+      <!-- Search & Filters Toolbar -->
+      <div class="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-3">
+        <!-- Search Input -->
+        <div class="relative w-full sm:w-80">
+          <input type="text" id="search-input" placeholder="Search by name, slug or UPI..." class="w-full pl-9 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm font-medium text-slate-800 focus:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 transition-all">
+          <svg class="w-4 h-4 text-slate-400 absolute left-3 top-2.5 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+        </div>
+
+        <!-- Filter Dropdown & Status Toggle -->
+        <div class="flex items-center gap-2 w-full sm:w-auto justify-end">
+          <label for="status-filter" class="text-xs font-semibold text-slate-500 hidden sm:inline">Status:</label>
+          <select id="status-filter" class="px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm font-semibold text-slate-700 focus:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600">
+            <option value="all">All Statuses</option>
+            <option value="active">Active Outlets</option>
+            <option value="inactive">Inactive Outlets</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Desktop Table View (Hidden on mobile) -->
+      <div class="hidden md:block bg-white rounded-2xl border border-slate-200/80 shadow-sm overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs">
+            <thead class="bg-slate-50/80 border-b border-slate-200/80 text-slate-600 font-bold uppercase tracking-wider text-[11px]">
+              <tr>
+                <th class="px-6 py-4">Restaurant</th>
+                <th class="px-6 py-4">Location</th>
+                <th class="px-6 py-4">Customers</th>
+                <th class="px-6 py-4">UPI ID</th>
+                <th class="px-6 py-4">Status</th>
+                <th class="px-6 py-4">Created</th>
+                <th class="px-6 py-4 text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="restaurant-table-body" class="divide-y divide-slate-100 font-medium text-slate-700">
+              <!-- Dynamically Populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Mobile Cards View (Requirement 28 & 48) -->
+      <div id="restaurant-mobile-cards" class="md:hidden space-y-3">
+        <!-- Dynamically Populated -->
+      </div>
+
+      <!-- Empty State (Requirement 41) -->
+      <div id="empty-state" class="hidden bg-white p-12 rounded-2xl border border-dashed border-slate-300 text-center space-y-3">
+        <div class="w-12 h-12 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center mx-auto">
+          <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
+        </div>
+        <h3 class="text-base font-bold text-slate-900">No Restaurants Found</h3>
+        <p class="text-xs text-slate-500 max-w-sm mx-auto">No restaurants match your active filters or search terms. Try searching another name or onboard a new outlet.</p>
+        <button id="btn-empty-add" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-indigo-600 text-white text-xs font-bold hover:bg-indigo-700 transition-colors">
+          + Add First Restaurant
+        </button>
+      </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-auto py-4 px-6 border-t border-slate-200/80 bg-white text-center text-xs text-slate-400">
+      &copy; 2026 PaytoConnect &bull; Developed by <span class="font-bold text-slate-600">ALAG INNOVATIVE SOLUTIONS</span> &bull; Lead: Abhishek Chaudhary
+    </footer>
+  </div>
+
+  <!-- Reusable Scripts -->
+  <script src="../js/store.js"></script>
+  <script src="../js/toast.js"></script>
+  <script src="../js/modal.js"></script>
+  <script src="../js/app.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Initialize App Layout
+      App.init({
+        role: 'admin',
+        activeNav: 'admin-restaurants',
+        title: 'Restaurants',
+        breadcrumb: 'Restaurants'
+      });
+
+      const tableBody = document.getElementById('restaurant-table-body');
+      const cardsContainer = document.getElementById('restaurant-mobile-cards');
+      const emptyState = document.getElementById('empty-state');
+      const searchInput = document.getElementById('search-input');
+      const statusFilter = document.getElementById('status-filter');
+      const btnAdd = document.getElementById('btn-add-restaurant');
+      const btnEmptyAdd = document.getElementById('btn-empty-add');
+
+      function renderList() {
+        const query = searchInput.value.toLowerCase().trim();
+        const status = statusFilter.value;
+        const allRests = Store.getRestaurants();
+
+        const filtered = allRests.filter(r => {
+          const matchQuery = (r.name && r.name.toLowerCase().includes(query)) ||
+                             (r.slug && r.slug.toLowerCase().includes(query)) ||
+                             (r.upi_id && r.upi_id.toLowerCase().includes(query));
+          const matchStatus = status === 'all' || r.status === status;
+          return matchQuery && matchStatus;
+        });
+
+        if (filtered.length === 0) {
+          tableBody.innerHTML = '';
+          cardsContainer.innerHTML = '';
+          emptyState.classList.remove('hidden');
+          return;
+        }
+
+        emptyState.classList.add('hidden');
+
+        // Render Desktop Table Rows
+        tableBody.innerHTML = filtered.map(r => `
+          <tr class="hover:bg-slate-50/70 transition-colors">
+            <td class="px-6 py-4">
+              <div class="flex items-center gap-3">
+                <img src="${r.logo || 'https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=150&auto=format&fit=crop&q=80'}" alt="${r.name}" class="w-9 h-9 rounded-xl object-cover border border-slate-200">
+                <div>
+                  <h4 class="font-bold text-slate-900 text-xs sm:text-sm">${r.name}</h4>
+                  <span class="text-[11px] text-indigo-600 font-mono">scan.html?restaurant=${r.slug}</span>
+                </div>
+              </div>
+            </td>
+            <td class="px-6 py-4 text-slate-600 text-xs max-w-xs truncate" title="${r.address}">
+              ${r.address}
+            </td>
+            <td class="px-6 py-4 font-bold text-slate-800">
+              ${(r.customers_count || 0).toLocaleString()}
+            </td>
+            <td class="px-6 py-4 font-mono text-xs text-slate-700">
+              ${r.upi_id}
+            </td>
+            <td class="px-6 py-4">
+              <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold ${r.status === 'active' ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-slate-100 text-slate-600 border border-slate-200'}">
+                ${r.status === 'active' ? 'Active' : 'Inactive'}
+              </span>
+            </td>
+            <td class="px-6 py-4 text-slate-400 text-xs">
+              ${r.created_at || '2026-01-15'}
+            </td>
+            <td class="px-6 py-4 text-right">
+              <div class="flex items-center justify-end gap-1.5">
+                <a href="../scan.html?restaurant=${r.slug}" target="_blank" class="p-1.5 text-slate-400 hover:text-indigo-600 rounded-lg hover:bg-slate-100 transition-colors" title="Open Customer QR Page">
+                  <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" /></svg>
+                </a>
+                <button type="button" class="btn-edit-rest p-1.5 text-slate-400 hover:text-sky-600 rounded-lg hover:bg-slate-100 transition-colors" data-id="${r.id}" title="Edit Profile">
+                  <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
+                </button>
+                <button type="button" class="btn-delete-rest p-1.5 text-slate-400 hover:text-rose-600 rounded-lg hover:bg-slate-100 transition-colors" data-id="${r.id}" data-name="${r.name}" title="Delete Outlet">
+                  <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                </button>
+              </div>
+            </td>
+          </tr>
+        `).join('');
+
+        // Render Mobile Cards View
+        cardsContainer.innerHTML = filtered.map(r => `
+          <div class="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm space-y-3">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2.5">
+                <img src="${r.logo || 'https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=150&auto=format&fit=crop&q=80'}" alt="${r.name}" class="w-10 h-10 rounded-xl object-cover border border-slate-200">
+                <div>
+                  <h4 class="font-bold text-slate-900 text-sm">${r.name}</h4>
+                  <span class="text-[10px] text-slate-500 block">${r.address}</span>
+                </div>
+              </div>
+              <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold ${r.status === 'active' ? 'bg-emerald-50 text-emerald-700' : 'bg-slate-100 text-slate-600'}">
+                ${r.status === 'active' ? 'Active' : 'Inactive'}
+              </span>
+            </div>
+
+            <div class="grid grid-cols-2 gap-2 text-xs py-2 border-y border-slate-100">
+              <div>
+                <span class="text-[10px] text-slate-400 uppercase font-semibold block">UPI ID</span>
+                <span class="font-mono font-medium text-slate-700 text-[11px]">${r.upi_id}</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-400 uppercase font-semibold block">Total Diners</span>
+                <span class="font-bold text-slate-800 text-[11px]">${(r.customers_count || 0).toLocaleString()}</span>
+              </div>
+            </div>
+
+            <div class="flex items-center justify-between pt-1">
+              <a href="../scan.html?restaurant=${r.slug}" target="_blank" class="inline-flex items-center gap-1 text-xs font-semibold text-indigo-600 hover:text-indigo-800">
+                <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" /></svg>
+                Customer QR
+              </a>
+              <div class="flex items-center gap-2">
+                <button type="button" class="btn-edit-rest px-2.5 py-1 text-xs font-semibold rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700" data-id="${r.id}">
+                  Edit
+                </button>
+                <button type="button" class="btn-delete-rest px-2.5 py-1 text-xs font-semibold rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-600" data-id="${r.id}" data-name="${r.name}">
+                  Delete
+                </button>
+              </div>
+            </div>
+          </div>
+        `).join('');
+
+        // Wire Edit and Delete buttons
+        document.querySelectorAll('.btn-edit-rest').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const id = btn.getAttribute('data-id');
+            const target = Store.getRestaurants().find(x => x.id === id);
+            if (target) {
+              Modal.openRestaurantModal(target, () => renderList());
+            }
+          });
+        });
+
+        document.querySelectorAll('.btn-delete-rest').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const id = btn.getAttribute('data-id');
+            const name = btn.getAttribute('data-name');
+            Modal.confirmDelete(name, () => {
+              Store.deleteRestaurant(id);
+              Toast.warning('Restaurant deleted from demo system.');
+              renderList();
+            });
+          });
+        });
+      }
+
+      // Initial Render & Filter Listeners
+      renderList();
+      searchInput.addEventListener('input', renderList);
+      statusFilter.addEventListener('change', renderList);
+
+      // Add Restaurant Buttons
+      const openAdd = () => Modal.openRestaurantModal(null, () => renderList());
+      btnAdd.addEventListener('click', openAdd);
+      btnEmptyAdd.addEventListener('click', openAdd);
+    });
+  </script>
+</body>
+</html>

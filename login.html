@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portal Login | PaytoConnect</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="assets/css/custom.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-gradient-to-br from-slate-900 via-slate-950 to-indigo-950 text-slate-100 min-h-screen flex flex-col justify-between p-4 sm:p-6 antialiased">
+
+  <!-- Minimal Header -->
+  <header class="max-w-md w-full mx-auto flex items-center justify-between pb-4">
+    <a href="index.html" class="flex items-center gap-2.5 group">
+      <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-indigo-500 to-sky-400 flex items-center justify-center text-white shadow-md shadow-indigo-500/30 group-hover:scale-105 transition-transform">
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" /></svg>
+      </div>
+      <div>
+        <span class="text-sm font-black tracking-tight text-white block">PaytoConnect</span>
+        <span class="text-[10px] text-slate-400 block -mt-0.5">Scan. Pay. Connect.</span>
+      </div>
+    </a>
+    <a href="index.html" class="text-xs font-semibold text-slate-400 hover:text-white transition-colors">
+      &larr; Back to Website
+    </a>
+  </header>
+
+  <!-- Login Card -->
+  <main class="max-w-md w-full mx-auto my-auto py-6">
+
+    <div class="bg-white text-slate-900 rounded-3xl shadow-2xl p-6 sm:p-8 border border-slate-100 space-y-6">
+      
+      <div class="text-center space-y-1">
+        <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">Sign in to your portal</h2>
+        <p class="text-xs text-slate-500 font-medium">Access your management dashboard & customer CRM.</p>
+      </div>
+
+      <!-- Role Selector Tabs -->
+      <div class="grid grid-cols-2 p-1 bg-slate-100 rounded-xl text-xs font-bold text-slate-600">
+        <button type="button" id="tab-admin" class="py-2.5 rounded-lg bg-white text-indigo-600 shadow-sm transition-all">
+          Master Admin
+        </button>
+        <button type="button" id="tab-restaurant" class="py-2.5 rounded-lg hover:text-slate-900 transition-all">
+          Restaurant Owner
+        </button>
+      </div>
+
+      <!-- Quick 1-Click Demo Fill Banners (Requirement 47) -->
+      <div class="p-3 rounded-2xl bg-indigo-50 border border-indigo-100 flex items-center justify-between">
+        <div class="text-left">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-indigo-700 block" id="demo-account-label">Master Admin Demo</span>
+          <span class="text-xs font-mono text-slate-600" id="demo-creds-preview">admin@paytoconnect.com</span>
+        </div>
+        <button type="button" id="btn-fill-demo" class="px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold shadow-sm transition-colors">
+          Auto Fill
+        </button>
+      </div>
+
+      <!-- Login Form -->
+      <form id="login-form" class="space-y-4">
+        <div>
+          <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Email or Username</label>
+          <input type="text" id="login-email" required value="admin@paytoconnect.com" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm font-semibold text-slate-800 focus:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 transition-all">
+        </div>
+
+        <div>
+          <div class="flex items-center justify-between mb-1">
+            <label class="block text-xs font-bold uppercase tracking-wider text-slate-600">Password</label>
+            <span class="text-[11px] text-slate-400">Demo: admin123</span>
+          </div>
+          <input type="password" id="login-password" required value="admin123" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm font-semibold text-slate-800 focus:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 transition-all">
+        </div>
+
+        <button type="submit" class="w-full py-3 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-700 active:scale-[0.99] text-white font-bold text-xs sm:text-sm shadow-md shadow-indigo-500/20 transition-all flex items-center justify-center gap-2">
+          <span>Enter Portal</span>
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+        </button>
+      </form>
+
+      <div class="pt-2 border-t border-slate-100 text-center">
+        <a href="scan.html?restaurant=chaudhary" target="_blank" class="text-xs font-semibold text-indigo-600 hover:underline">
+          Looking to pay as a customer? Scan counter QR &rarr;
+        </a>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="max-w-md w-full mx-auto text-center py-2 text-slate-400 text-xs">
+    PaytoConnect &bull; Product by <strong class="text-slate-300">ALAG INNOVATIVE SOLUTIONS</strong>
+  </footer>
+
+  <!-- Reusable Scripts -->
+  <script src="js/store.js"></script>
+  <script src="js/toast.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      let selectedRole = 'admin';
+
+      const tabAdmin = document.getElementById('tab-admin');
+      const tabRest = document.getElementById('tab-restaurant');
+      const emailInput = document.getElementById('login-email');
+      const passInput = document.getElementById('login-password');
+      const demoLabel = document.getElementById('demo-account-label');
+      const demoCreds = document.getElementById('demo-creds-preview');
+      const btnFill = document.getElementById('btn-fill-demo');
+      const form = document.getElementById('login-form');
+
+      function setRole(role) {
+        selectedRole = role;
+        if (role === 'admin') {
+          tabAdmin.className = 'py-2.5 rounded-lg bg-white text-indigo-600 shadow-sm transition-all';
+          tabRest.className = 'py-2.5 rounded-lg hover:text-slate-900 transition-all';
+          demoLabel.textContent = 'Master Admin Demo';
+          demoCreds.textContent = 'admin@paytoconnect.com';
+          emailInput.value = 'admin@paytoconnect.com';
+          passInput.value = 'admin123';
+        } else {
+          tabRest.className = 'py-2.5 rounded-lg bg-white text-indigo-600 shadow-sm transition-all';
+          tabAdmin.className = 'py-2.5 rounded-lg hover:text-slate-900 transition-all';
+          demoLabel.textContent = 'Restaurant Owner Demo (Chaudhary Cafe)';
+          demoCreds.textContent = 'chaudhary@paytoconnect.com';
+          emailInput.value = 'chaudhary@paytoconnect.com';
+          passInput.value = 'admin123';
+        }
+      }
+
+      tabAdmin.addEventListener('click', () => setRole('admin'));
+      tabRest.addEventListener('click', () => setRole('restaurant'));
+
+      btnFill.addEventListener('click', () => {
+        if (selectedRole === 'admin') {
+          emailInput.value = 'admin@paytoconnect.com';
+          passInput.value = 'admin123';
+        } else {
+          emailInput.value = 'chaudhary@paytoconnect.com';
+          passInput.value = 'admin123';
+        }
+        Toast.success('Demo credentials loaded.');
+      });
+
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const email = emailInput.value.trim();
+
+        if (selectedRole === 'admin') {
+          Store.setSession({
+            username: 'admin',
+            email: email,
+            name: 'Admin',
+            role: 'admin',
+            title: 'Administrator'
+          });
+          Toast.success('Welcome, Administrator!');
+          setTimeout(() => {
+            window.location.href = 'admin/dashboard.html';
+          }, 350);
+        } else {
+          Store.setSession({
+            username: 'chaudhary',
+            email: email,
+            name: 'Chaudhary Cafe',
+            role: 'restaurant',
+            restaurant_slug: 'chaudhary',
+            title: 'Owner'
+          });
+          Toast.success('Welcome back, Chaudhary Cafe!');
+          setTimeout(() => {
+            window.location.href = 'restaurant/dashboard.html';
+          }, 350);
+        }
+      });
+    });
+  </script>
+</body>
+</html>

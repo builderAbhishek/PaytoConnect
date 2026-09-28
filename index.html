@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PaytoConnect &bull; Scan. Pay. Connect. | ALAG INNOVATIVE SOLUTIONS</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="assets/css/custom.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-slate-900 text-slate-100 antialiased selection:bg-indigo-500 selection:text-white">
+
+  <!-- Public Responsive Navbar (Requirement 60) -->
+  <nav class="sticky top-0 z-40 bg-slate-900/80 backdrop-blur-md border-b border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      
+      <!-- Brand Logo -->
+      <a href="index.html" class="flex items-center gap-2.5 group">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-500 to-sky-400 flex items-center justify-center text-white shadow-lg shadow-indigo-500/25 group-hover:scale-105 transition-transform">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" /></svg>
+        </div>
+        <div class="flex flex-col">
+          <span class="text-base font-extrabold text-white tracking-tight flex items-center gap-1.5">
+            PaytoConnect
+            <span class="px-1.5 py-0.5 text-[9px] font-bold uppercase rounded bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">MVP</span>
+          </span>
+          <span class="text-[10px] text-slate-400 font-medium">by ALAG INNOVATIVE SOLUTIONS</span>
+        </div>
+      </a>
+
+      <!-- Desktop Nav Links -->
+      <div class="hidden md:flex items-center gap-6 text-xs font-semibold text-slate-300">
+        <a href="#features" class="hover:text-white transition-colors">Features</a>
+        <a href="#how-it-works" class="hover:text-white transition-colors">How It Works</a>
+        <a href="#benefits" class="hover:text-white transition-colors">Restaurant Benefits</a>
+        <a href="#preview" class="hover:text-white transition-colors">Live Preview</a>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="flex items-center gap-2.5">
+        <a href="login.html" class="px-3.5 py-2 rounded-xl text-xs font-bold text-slate-300 hover:text-white hover:bg-slate-800 transition-colors">
+          Sign In
+        </a>
+        <a href="scan.html?restaurant=chaudhary" class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-xs font-bold text-white shadow-md shadow-indigo-500/30 transition-all hover:scale-105">
+          Try Live Demo &rarr;
+        </a>
+      </div>
+
+    </div>
+  </nav>
+
+  <!-- Hero Section (Requirement 60) -->
+  <section class="relative pt-16 pb-20 sm:pt-24 sm:pb-32 overflow-hidden">
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(99,102,241,0.25),rgba(255,255,255,0))]"></div>
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative text-center space-y-6">
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-bold uppercase tracking-wider">
+        <span class="w-2 h-2 rounded-full bg-indigo-400 animate-ping"></span>
+        Zero MDR &bull; Direct Bank UPI &bull; 100% Diner Data
+      </div>
+
+      <h1 class="text-4xl sm:text-6xl font-black text-white tracking-tight max-w-4xl mx-auto leading-tight">
+        Turn silent QR payments into <span class="bg-gradient-to-r from-indigo-400 via-sky-300 to-indigo-200 bg-clip-text text-transparent">customer intelligence.</span>
+      </h1>
+
+      <p class="text-base sm:text-xl text-slate-300 max-w-2xl mx-auto font-normal leading-relaxed">
+        Traditional restaurant QR standees lose 100% of diner contacts. <strong>PaytoConnect</strong> adds a seamless 10-second check-in before UPI payment, capturing diner names, mobile numbers, and WhatsApp marketing consent.
+      </p>
+
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-3 pt-4">
+        <a href="scan.html?restaurant=chaudhary" class="w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white font-extrabold text-sm shadow-xl shadow-indigo-600/30 transition-all hover:scale-[1.02]">
+          Experience Customer Scan Flow
+        </a>
+        <a href="login.html" class="w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-extrabold text-sm border border-slate-700 transition-all">
+          Explore Dashboard Portals
+        </a>
+      </div>
+
+      <!-- Quick Trust Indicators -->
+      <div class="pt-8 flex flex-wrap items-center justify-center gap-6 text-xs text-slate-400 font-semibold">
+        <span class="flex items-center gap-1.5">
+          <svg class="w-4 h-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+          0% Gateway Escrow
+        </span>
+        <span class="flex items-center gap-1.5">
+          <svg class="w-4 h-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+          Direct Bank Settlement
+        </span>
+        <span class="flex items-center gap-1.5">
+          <svg class="w-4 h-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+          WhatsApp Opt-in Capture
+        </span>
+        <span class="flex items-center gap-1.5">
+          <svg class="w-4 h-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+          Multi-Outlet CRM
+        </span>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Product Preview Section (Requirement 60) -->
+  <section id="preview" class="py-12 bg-slate-950/60 border-y border-slate-800/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+      
+      <div class="text-center space-y-2">
+        <h2 class="text-xs font-bold uppercase tracking-wider text-indigo-400">Commercial System Architecture</h2>
+        <p class="text-2xl sm:text-3xl font-extrabold text-white">Dual-Portal Management + Customer Experience</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        
+        <!-- Preview 1: Customer Scan -->
+        <div class="bg-slate-900 p-6 rounded-3xl border border-slate-800 space-y-4 hover:border-indigo-500/50 transition-colors">
+          <div class="w-10 h-10 rounded-2xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center font-bold">1</div>
+          <h3 class="text-lg font-bold text-white">Customer QR Scan Flow</h3>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            Diners scan counter standees, enter their name, phone number, choose local or traveler status, and tap to pay via GPay or PhonePe.
+          </p>
+          <a href="scan.html?restaurant=chaudhary" class="inline-flex items-center gap-1 text-xs font-bold text-indigo-400 hover:text-indigo-300">
+            Open Scan Page &rarr;
+          </a>
+        </div>
+
+        <!-- Preview 2: Restaurant Owner CRM -->
+        <div class="bg-slate-900 p-6 rounded-3xl border border-slate-800 space-y-4 hover:border-indigo-500/50 transition-colors">
+          <div class="w-10 h-10 rounded-2xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold">2</div>
+          <h3 class="text-lg font-bold text-white">Restaurant Owner Panel</h3>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            Restaurateurs track daily footfall, view recent diners, export filtered customer CSVs for WhatsApp marketing, and print counter QR standees.
+          </p>
+          <a href="restaurant/dashboard.html" class="inline-flex items-center gap-1 text-xs font-bold text-emerald-400 hover:text-emerald-300">
+            View Owner Panel &rarr;
+          </a>
+        </div>
+
+        <!-- Preview 3: Master Admin Platform -->
+        <div class="bg-slate-900 p-6 rounded-3xl border border-slate-800 space-y-4 hover:border-indigo-500/50 transition-colors">
+          <div class="w-10 h-10 rounded-2xl bg-sky-500/20 text-sky-400 flex items-center justify-center font-bold">3</div>
+          <h3 class="text-lg font-bold text-white">Master Admin Overview</h3>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            ALAG INNOVATIVE SOLUTIONS supervisors onboard new restaurants, toggle outlet statuses, inspect global charts, and monitor platform health.
+          </p>
+          <a href="admin/dashboard.html" class="inline-flex items-center gap-1 text-xs font-bold text-sky-400 hover:text-sky-300">
+            View Admin Dashboard &rarr;
+          </a>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- How It Works (Requirement 60) -->
+  <section id="how-it-works" class="py-16 sm:py-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+      
+      <div class="text-center space-y-2">
+        <h2 class="text-xs font-bold uppercase tracking-wider text-indigo-400">Streamlined 4-Step Journey</h2>
+        <p class="text-2xl sm:text-3xl font-extrabold text-white">How PaytoConnect Works</p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="bg-slate-800/40 p-6 rounded-2xl border border-slate-800 space-y-3">
+          <span class="w-8 h-8 rounded-xl bg-indigo-600 text-white font-extrabold text-xs flex items-center justify-center">1</span>
+          <h4 class="text-base font-bold text-white">Scan Counter Standee</h4>
+          <p class="text-xs text-slate-400">Diner scans the acrylic counter QR code using any smartphone camera or UPI app.</p>
+        </div>
+        <div class="bg-slate-800/40 p-6 rounded-2xl border border-slate-800 space-y-3">
+          <span class="w-8 h-8 rounded-xl bg-sky-600 text-white font-extrabold text-xs flex items-center justify-center">2</span>
+          <h4 class="text-base font-bold text-white">Frictionless Check-in</h4>
+          <p class="text-xs text-slate-400">Customer enters Name, 10-digit mobile number, demographic type, and bill amount.</p>
+        </div>
+        <div class="bg-slate-800/40 p-6 rounded-2xl border border-slate-800 space-y-3">
+          <span class="w-8 h-8 rounded-xl bg-emerald-600 text-white font-extrabold text-xs flex items-center justify-center">3</span>
+          <h4 class="text-base font-bold text-white">1-Tap UPI Handoff</h4>
+          <p class="text-xs text-slate-400">App redirects seamlessly to PhonePe, Google Pay, or Paytm directly to the restaurant's bank.</p>
+        </div>
+        <div class="bg-slate-800/40 p-6 rounded-2xl border border-slate-800 space-y-3">
+          <span class="w-8 h-8 rounded-xl bg-violet-600 text-white font-extrabold text-xs flex items-center justify-center">4</span>
+          <h4 class="text-base font-bold text-white">Scoped CRM Capture</h4>
+          <p class="text-xs text-slate-400">Diner record & marketing consent are saved in real time for weekend promotional campaigns.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Restaurant Benefits (Requirement 60) -->
+  <section id="benefits" class="py-16 sm:py-24 bg-slate-950/40 border-t border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+      
+      <div class="text-center space-y-2">
+        <h2 class="text-xs font-bold uppercase tracking-wider text-emerald-400">Why Restaurateurs Love Us</h2>
+        <p class="text-2xl sm:text-3xl font-extrabold text-white">Key Restaurant Benefits</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-2">
+          <div class="w-9 h-9 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold">₹0</div>
+          <h4 class="font-bold text-white text-base">0% Transaction Fees</h4>
+          <p class="text-xs text-slate-400">We never take MDR or commissions. Payments settle directly into your current account via NPCI UPI.</p>
+        </div>
+        <div class="p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-2">
+          <div class="w-9 h-9 rounded-xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center font-bold">CRM</div>
+          <h4 class="font-bold text-white text-base">Build a Customer Database</h4>
+          <p class="text-xs text-slate-400">Stop losing customer contacts. Capture hundreds of verified phone numbers every week.</p>
+        </div>
+        <div class="p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-2">
+          <div class="w-9 h-9 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center font-bold">WA</div>
+          <h4 class="font-bold text-white text-base">WhatsApp Marketing Lists</h4>
+          <p class="text-xs text-slate-400">Export clean, consent-verified contact spreadsheets with 1 click to broadcast festive offers.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CTA Section (Requirement 60) -->
+  <section class="py-16 sm:py-20 bg-gradient-to-r from-indigo-900 via-indigo-950 to-slate-950 text-center">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+      <h2 class="text-3xl sm:text-4xl font-black text-white tracking-tight">
+        Ready to supercharge your counter standee?
+      </h2>
+      <p class="text-sm sm:text-base text-indigo-200 max-w-xl mx-auto">
+        Deploy PaytoConnect in under 5 minutes. No complex hardware, zero payment gateway contracts, pure peer-to-merchant UPI.
+      </p>
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
+        <a href="scan.html?restaurant=chaudhary" class="px-8 py-3.5 rounded-2xl bg-white text-indigo-900 hover:bg-slate-100 font-extrabold text-sm shadow-xl transition-all hover:scale-105">
+          Try Live Customer Demo
+        </a>
+        <a href="login.html" class="px-8 py-3.5 rounded-2xl bg-indigo-800/80 hover:bg-indigo-700 text-white font-extrabold text-sm border border-indigo-600 transition-all">
+          Sign In to Portal
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer (Requirement 60) -->
+  <footer class="py-10 border-t border-slate-800 bg-slate-950 text-slate-400 text-xs">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2">
+        <span class="font-bold text-white">PaytoConnect</span>
+        <span>&bull;</span>
+        <span>Product by <strong class="text-slate-300">ALAG INNOVATIVE SOLUTIONS</strong></span>
+      </div>
+      <div>
+        <span>Lead & System Architect: <strong class="text-slate-200">Abhishek Chaudhary</strong></span>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

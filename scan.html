@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Customer Payment Check-in | PaytoConnect</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="assets/css/custom.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-gradient-to-b from-slate-900 via-slate-900 to-indigo-950 text-slate-100 min-h-screen flex flex-col justify-between p-4 sm:p-6 antialiased">
+
+  <!-- Minimal Brand Header -->
+  <header class="max-w-md w-full mx-auto flex items-center justify-between pb-4 border-b border-slate-800">
+    <div class="flex items-center gap-2.5">
+      <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-indigo-500 to-sky-400 flex items-center justify-center text-white shadow-md shadow-indigo-500/30">
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" /></svg>
+      </div>
+      <div>
+        <span class="text-sm font-black tracking-tight text-white block">PaytoConnect</span>
+        <span class="text-[10px] text-slate-400 block -mt-0.5">Scan. Pay. Connect.</span>
+      </div>
+    </div>
+    <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-[10px] font-bold">
+      <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+      Direct UPI Active
+    </span>
+  </header>
+
+  <!-- Main Card Container -->
+  <main class="max-w-md w-full mx-auto my-auto py-6">
+
+    <div class="bg-white text-slate-900 rounded-3xl shadow-2xl p-6 sm:p-8 border border-slate-100 relative overflow-hidden">
+      
+      <!-- Restaurant Profile Header -->
+      <div class="text-center space-y-2 pb-6 border-b border-slate-100">
+        <img id="rest-logo" src="" alt="Restaurant Logo" class="w-16 h-16 rounded-2xl mx-auto object-cover border-2 border-slate-100 shadow-md">
+        <div>
+          <h2 class="text-lg sm:text-xl font-extrabold text-slate-900 tracking-tight" id="rest-name">Loading Restaurant...</h2>
+          <p class="text-xs text-slate-500 font-medium mt-0.5" id="rest-address">Shohratgarh, Siddharthnagar</p>
+        </div>
+        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 text-slate-700 font-mono text-[11px] font-semibold">
+          <span>UPI:</span>
+          <span id="rest-upi" class="text-indigo-600 font-bold">merchant@upi</span>
+        </div>
+      </div>
+
+      <!-- Payment / Check-in Form -->
+      <form id="payment-form" class="space-y-4 pt-6">
+
+        <!-- Diner Name -->
+        <div>
+          <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Your Full Name *</label>
+          <input type="text" id="cust-name" required placeholder="e.g. Rahul Verma" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 transition-all">
+        </div>
+
+        <!-- Diner Mobile (+91 Indian validation) -->
+        <div>
+          <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Mobile Number *</label>
+          <div class="flex items-center">
+            <span class="px-3.5 py-3 bg-slate-100 border border-r-0 border-slate-200 rounded-l-xl text-xs font-bold text-slate-600">+91</span>
+            <input type="tel" id="cust-mobile" required maxlength="10" placeholder="98765 43210" class="w-full px-3.5 py-3 bg-slate-50 border border-slate-200 rounded-r-xl text-sm font-semibold text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 transition-all">
+          </div>
+          <p class="text-[11px] text-slate-400 mt-1">Required for digital receipt & order verification.</p>
+        </div>
+
+        <!-- Demographic Choice: Local vs Outsider -->
+        <div>
+          <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">Are you a Local Resident or Traveling? *</label>
+          <div class="grid grid-cols-2 gap-3">
+            <label class="flex items-center justify-center gap-2 p-3 rounded-xl border-2 cursor-pointer transition-all border-indigo-600 bg-indigo-50/50 text-indigo-900 font-bold text-xs" id="label-type-local">
+              <input type="radio" name="customer_type" value="Local" checked class="hidden" id="radio-local">
+              <svg class="w-4 h-4 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>
+              Local Neighbor
+            </label>
+            <label class="flex items-center justify-center gap-2 p-3 rounded-xl border-2 cursor-pointer transition-all border-slate-200 bg-white text-slate-600 font-bold text-xs" id="label-type-outsider">
+              <input type="radio" name="customer_type" value="Outsider" class="hidden" id="radio-outsider">
+              <svg class="w-4 h-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+              Outsider / Traveler
+            </label>
+          </div>
+        </div>
+
+        <!-- Bill Amount -->
+        <div>
+          <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Bill Amount (₹) *</label>
+          <div class="relative">
+            <span class="absolute left-4 top-3 text-base font-extrabold text-slate-400">₹</span>
+            <input type="number" step="0.01" min="1" max="500000" id="cust-amount" required placeholder="0.00" class="w-full pl-9 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-lg font-black text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 transition-all">
+          </div>
+        </div>
+
+        <!-- Marketing & WhatsApp Consent Checkbox -->
+        <div class="p-3.5 rounded-2xl bg-indigo-50/50 border border-indigo-100 flex items-start gap-3">
+          <input type="checkbox" id="cust-consent" checked class="mt-1 w-4 h-4 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500">
+          <label for="cust-consent" class="text-xs text-slate-600 leading-relaxed cursor-pointer select-none">
+            <strong class="text-slate-900 block font-bold">Receive weekend specials & discounts</strong>
+            Allow <span id="consent-rest-name" class="font-bold text-slate-800">this restaurant</span> to send occasional offers via WhatsApp.
+          </label>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" id="btn-submit-pay" class="w-full py-4 px-6 rounded-2xl bg-indigo-600 hover:bg-indigo-700 active:scale-[0.99] text-white font-extrabold text-sm sm:text-base shadow-xl shadow-indigo-500/30 transition-all flex items-center justify-center gap-2">
+          <span>Continue to UPI Payment</span>
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+        </button>
+
+        <p class="text-[11px] text-center text-slate-400 font-medium">
+          Zero merchant fee &bull; 100% Secure NPCI UPI protocol
+        </p>
+
+      </form>
+
+      <!-- Handoff State (Requirement 57: NEVER display "Payment Successful") -->
+      <div id="handoff-state" class="hidden text-center space-y-5 pt-4">
+        <div class="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto shadow-inner">
+          <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" /></svg>
+        </div>
+
+        <div>
+          <h3 class="text-lg font-extrabold text-slate-900">Details Saved! Opening UPI...</h3>
+          <p class="text-xs text-slate-500 mt-1 max-w-xs mx-auto">Your diner check-in has been recorded. Please complete payment of <strong class="text-slate-800" id="handoff-amount">₹480.00</strong> inside your preferred UPI app.</p>
+        </div>
+
+        <!-- 1-Tap App Deep-links -->
+        <div class="space-y-2 pt-2">
+          <a id="btn-upi-app" href="#" class="w-full py-3.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm shadow-lg shadow-emerald-500/20 transition-all flex items-center justify-center gap-2">
+            <span>Pay on PhonePe / GPay / Paytm</span>
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+          </a>
+          <button type="button" id="btn-copy-upi" class="w-full py-2.5 px-4 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 font-semibold text-xs transition-colors">
+            Copy UPI ID to clipboard
+          </button>
+        </div>
+
+        <!-- Important Notice (Requirement 57) -->
+        <div class="p-3 bg-amber-50 border border-amber-200 rounded-xl text-left">
+          <div class="flex items-center gap-1.5 text-xs font-bold text-amber-800">
+            <svg class="w-4 h-4 text-amber-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            Show Payment Confirmation to Cashier
+          </div>
+          <p class="text-[11px] text-amber-700 mt-1">Please show the green success screen in your UPI app to the cashier counter after payment completes.</p>
+        </div>
+
+        <button type="button" id="btn-new-checkin" class="text-xs text-indigo-600 font-bold hover:underline">
+          &larr; Make another check-in
+        </button>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- Public Footer -->
+  <footer class="max-w-md w-full mx-auto text-center py-2 text-slate-400 text-xs">
+    PaytoConnect &bull; Product by <strong class="text-slate-300">ALAG INNOVATIVE SOLUTIONS</strong>
+  </footer>
+
+  <!-- Reusable Scripts -->
+  <script src="js/store.js"></script>
+  <script src="js/toast.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const slug = urlParams.get('restaurant') || 'chaudhary';
+      const prefillAmt = urlParams.get('amt') || '';
+
+      const restaurant = Store.getRestaurantBySlug(slug);
+
+      // Populate Restaurant Details
+      document.getElementById('rest-name').textContent = restaurant.name;
+      document.getElementById('rest-address').textContent = restaurant.address;
+      document.getElementById('rest-upi').textContent = restaurant.upi_id;
+      document.getElementById('rest-logo').src = restaurant.logo || 'https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=150&auto=format&fit=crop&q=80';
+      document.getElementById('consent-rest-name').textContent = restaurant.name;
+
+      if (prefillAmt) {
+        document.getElementById('cust-amount').value = prefillAmt;
+      }
+
+      // Demographic Radio Selector Style
+      const radioLocal = document.getElementById('radio-local');
+      const radioOutsider = document.getElementById('radio-outsider');
+      const labelLocal = document.getElementById('label-type-local');
+      const labelOutsider = document.getElementById('label-type-outsider');
+
+      function updateRadioStyles() {
+        if (radioLocal.checked) {
+          labelLocal.className = 'flex items-center justify-center gap-2 p-3 rounded-xl border-2 cursor-pointer transition-all border-indigo-600 bg-indigo-50/50 text-indigo-900 font-bold text-xs';
+          labelOutsider.className = 'flex items-center justify-center gap-2 p-3 rounded-xl border-2 cursor-pointer transition-all border-slate-200 bg-white text-slate-600 font-bold text-xs';
+        } else {
+          labelOutsider.className = 'flex items-center justify-center gap-2 p-3 rounded-xl border-2 cursor-pointer transition-all border-amber-600 bg-amber-50/50 text-amber-900 font-bold text-xs';
+          labelLocal.className = 'flex items-center justify-center gap-2 p-3 rounded-xl border-2 cursor-pointer transition-all border-slate-200 bg-white text-slate-600 font-bold text-xs';
+        }
+      }
+
+      radioLocal.addEventListener('change', updateRadioStyles);
+      radioOutsider.addEventListener('change', updateRadioStyles);
+
+      // Form Submission
+      const form = document.getElementById('payment-form');
+      const handoff = document.getElementById('handoff-state');
+
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const name = document.getElementById('cust-name').value.trim();
+        const mobile = document.getElementById('cust-mobile').value.trim().replace(/\D/g, '');
+        const amount = parseFloat(document.getElementById('cust-amount').value);
+        const consent = document.getElementById('cust-consent').checked;
+        const type = radioLocal.checked ? 'Local' : 'Outsider';
+
+        if (!name) {
+          Toast.error('Please enter your full name.');
+          return;
+        }
+
+        if (!/^[6-9]\d{9}$/.test(mobile)) {
+          Toast.error('Please enter a valid 10-digit Indian mobile number.');
+          return;
+        }
+
+        if (isNaN(amount) || amount <= 0) {
+          Toast.error('Please enter a valid bill amount.');
+          return;
+        }
+
+        // Save to LocalStorage CRM before launching payment
+        const savedCustomer = Store.saveCustomer({
+          restaurant_slug: restaurant.slug,
+          restaurant_name: restaurant.name,
+          name: name,
+          mobile: mobile,
+          customer_type: type,
+          bill_amount: amount,
+          marketing_consent: consent
+        });
+
+        Toast.success('Diner check-in saved!');
+
+        // Build UPI Intent Deep Link
+        const upiUri = `upi://pay?pa=${encodeURIComponent(restaurant.upi_id)}&pn=${encodeURIComponent(restaurant.name)}&am=${amount.toFixed(2)}&cu=INR&tn=${encodeURIComponent('Bill at ' + restaurant.name)}`;
+
+        // Switch to Handoff state (Requirement 57)
+        form.classList.add('hidden');
+        handoff.classList.remove('hidden');
+
+        document.getElementById('handoff-amount').textContent = `₹${amount.toLocaleString('en-IN', { minimumFractionDigits: 2 })}`;
+        const upiBtn = document.getElementById('btn-upi-app');
+        upiBtn.href = upiUri;
+
+        // Auto trigger UPI app intent
+        setTimeout(() => {
+          window.location.href = upiUri;
+        }, 300);
+
+        // Copy UPI Button
+        document.getElementById('btn-copy-upi').onclick = () => {
+          navigator.clipboard.writeText(restaurant.upi_id).then(() => {
+            Toast.success('UPI ID copied: ' + restaurant.upi_id);
+          });
+        };
+
+        // New checkin reset
+        document.getElementById('btn-new-checkin').onclick = () => {
+          form.reset();
+          updateRadioStyles();
+          handoff.classList.add('hidden');
+          form.classList.remove('hidden');
+        };
+      });
+    });
+  </script>
+</body>
+</html>

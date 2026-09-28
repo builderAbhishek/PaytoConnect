@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Customer CRM | Chaudhary Cafe | PaytoConnect</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="../assets/css/custom.css">
+</head>
+<body class="bg-slate-50 text-slate-900 antialiased min-h-screen flex flex-col">
+
+  <!-- Sidebar Mount Target -->
+  <div id="sidebar-container"></div>
+
+  <!-- Main Content Wrapper -->
+  <div id="main-content-wrapper" class="md:pl-64 flex-1 flex flex-col transition-all duration-300">
+    
+    <!-- Navbar Mount Target -->
+    <div id="navbar-container"></div>
+
+    <!-- Page Content -->
+    <main class="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl w-full mx-auto space-y-6">
+
+      <!-- Header & Export Action (Requirement 35) -->
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">Customers</h1>
+          <p class="text-xs sm:text-sm font-medium text-slate-500 mt-1">Diner records captured exclusively at Chaudhary Cafe & Family Restaurant.</p>
+        </div>
+        <button id="btn-export-csv" class="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-xs sm:text-sm font-bold text-white shadow-md shadow-indigo-200 transition-all hover:scale-[1.02] active:scale-[0.98]">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
+          Export CSV
+        </button>
+      </div>
+
+      <!-- Search & Filters Toolbar -->
+      <div class="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm space-y-3">
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-3">
+          <!-- Search Bar -->
+          <div class="relative w-full sm:w-80">
+            <input type="text" id="cust-search" placeholder="Search by name or mobile..." class="w-full pl-9 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm font-medium text-slate-800 focus:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600">
+            <svg class="w-4 h-4 text-slate-400 absolute left-3 top-2.5 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+          </div>
+
+          <!-- Quick Filters Buttons (Requirement 35: All, Local, Outsider, Consent Given) -->
+          <div class="flex items-center gap-1.5 overflow-x-auto w-full sm:w-auto pb-1 sm:pb-0">
+            <button type="button" class="filter-chip px-3 py-1.5 rounded-lg text-xs font-bold bg-indigo-50 text-indigo-600 transition-colors" data-filter="all">All</button>
+            <button type="button" class="filter-chip px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:bg-slate-100 transition-colors" data-filter="Local">Local</button>
+            <button type="button" class="filter-chip px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:bg-slate-100 transition-colors" data-filter="Outsider">Outsider</button>
+            <button type="button" class="filter-chip px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:bg-slate-100 transition-colors" data-filter="consent">Consent Given</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Desktop Proper Data Table (Requirement 35) -->
+      <div class="hidden md:block bg-white rounded-2xl border border-slate-200/80 shadow-sm overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs">
+            <thead class="bg-slate-50/80 border-b border-slate-200/80 text-slate-600 font-bold uppercase tracking-wider text-[11px]">
+              <tr>
+                <th class="px-6 py-4">Customer Name</th>
+                <th class="px-6 py-4">Mobile Number</th>
+                <th class="px-6 py-4">Type</th>
+                <th class="px-6 py-4">Bill Amount</th>
+                <th class="px-6 py-4">Marketing Consent</th>
+                <th class="px-6 py-4">Check-in Time</th>
+                <th class="px-6 py-4 text-right">Action</th>
+              </tr>
+            </thead>
+            <tbody id="customers-table-body" class="divide-y divide-slate-100 font-medium text-slate-700">
+              <!-- Dynamically Populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Mobile Customer Cards (Requirement 35 & 48) -->
+      <div id="customers-mobile-cards" class="md:hidden space-y-3">
+        <!-- Dynamically Populated format:
+          Rahul
+          98XXXXXX21
+          Local
+          ₹480
+          Consent Given
+          Today, 7:42 PM
+        -->
+      </div>
+
+      <!-- Empty State (Requirement 41) -->
+      <div id="empty-state" class="hidden bg-white p-12 rounded-2xl border border-dashed border-slate-300 text-center space-y-3">
+        <div class="w-12 h-12 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center mx-auto">
+          <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+        </div>
+        <h3 class="text-base font-bold text-slate-900">No Customers Yet</h3>
+        <p class="text-xs text-slate-500 max-w-sm mx-auto">Your customers will appear here after someone completes the PaytoConnect form.</p>
+        <a href="qr.html" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-indigo-600 text-white text-xs font-bold hover:bg-indigo-700 transition-colors">
+          View QR
+        </a>
+      </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-auto py-4 px-6 border-t border-slate-200/80 bg-white text-center text-xs text-slate-400">
+      &copy; 2026 PaytoConnect &bull; Developed by <span class="font-bold text-slate-600">ALAG INNOVATIVE SOLUTIONS</span> &bull; Lead: Abhishek Chaudhary
+    </footer>
+  </div>
+
+  <!-- Reusable Scripts -->
+  <script src="../js/store.js"></script>
+  <script src="../js/toast.js"></script>
+  <script src="../js/modal.js"></script>
+  <script src="../js/app.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Initialize App Layout for Restaurant
+      App.init({
+        role: 'restaurant',
+        activeNav: 'rest-customers',
+        title: 'Customers',
+        breadcrumb: 'Customers'
+      });
+
+      const restSlug = 'chaudhary';
+      const tableBody = document.getElementById('customers-table-body');
+      const cardsContainer = document.getElementById('customers-mobile-cards');
+      const emptyState = document.getElementById('empty-state');
+      const searchInput = document.getElementById('cust-search');
+      const btnExport = document.getElementById('btn-export-csv');
+
+      let currentFilter = 'all';
+
+      // Privacy Phone Mask: 98XXXXXX21
+      function maskPhone(phone) {
+        if (!phone || phone.length < 6) return phone;
+        const clean = phone.replace(/\D/g, '');
+        if (clean.length === 10) {
+          return clean.substring(0, 2) + 'XXXXXX' + clean.substring(8);
+        }
+        return phone;
+      }
+
+      function renderList() {
+        const query = searchInput.value.toLowerCase().trim();
+        const all = Store.getCustomers(restSlug);
+
+        const filtered = all.filter(c => {
+          const matchQuery = (c.name && c.name.toLowerCase().includes(query)) ||
+                             (c.mobile && c.mobile.includes(query));
+          let matchFilter = true;
+          if (currentFilter === 'Local') matchFilter = c.customer_type === 'Local';
+          if (currentFilter === 'Outsider') matchFilter = c.customer_type === 'Outsider';
+          if (currentFilter === 'consent') matchFilter = !!c.marketing_consent;
+          return matchQuery && matchFilter;
+        });
+
+        if (filtered.length === 0) {
+          tableBody.innerHTML = '';
+          cardsContainer.innerHTML = '';
+          emptyState.classList.remove('hidden');
+          return;
+        }
+
+        emptyState.classList.add('hidden');
+
+        // Render Desktop Table Rows
+        tableBody.innerHTML = filtered.map(c => `
+          <tr class="hover:bg-slate-50/70 transition-colors cursor-pointer row-view-customer" data-id="${c.id}">
+            <td class="px-6 py-4 font-bold text-slate-900">
+              <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-xs">
+                  ${c.name.charAt(0).toUpperCase()}
+                </div>
+                <span>${c.name}</span>
+              </div>
+            </td>
+            <td class="px-6 py-4 font-mono text-xs text-slate-600">
+              ${maskPhone(c.mobile)}
+            </td>
+            <td class="px-6 py-4">
+              <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold ${c.customer_type === 'Local' ? 'bg-indigo-50 text-indigo-700 border border-indigo-200' : 'bg-amber-50 text-amber-700 border border-amber-200'}">
+                ${c.customer_type}
+              </span>
+            </td>
+            <td class="px-6 py-4 font-bold text-emerald-600 text-xs">
+              ₹${Number(c.bill_amount).toLocaleString('en-IN')}
+            </td>
+            <td class="px-6 py-4">
+              <span class="inline-flex items-center gap-1 text-[11px] font-semibold ${c.marketing_consent ? 'text-emerald-700' : 'text-slate-400'}">
+                <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="${c.marketing_consent ? 'M5 13l4 4L19 7' : 'M6 18L18 6M6 6l12 12'}" /></svg>
+                ${c.marketing_consent ? 'Consent Given' : 'Declined'}
+              </span>
+            </td>
+            <td class="px-6 py-4 text-slate-400 text-xs">
+              ${c.date}, ${c.time}
+            </td>
+            <td class="px-6 py-4 text-right">
+              <button type="button" class="btn-view-cust p-1.5 text-slate-400 hover:text-indigo-600 rounded-lg hover:bg-slate-100 transition-colors" data-id="${c.id}" title="View Details">
+                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
+              </button>
+            </td>
+          </tr>
+        `).join('');
+
+        // Render Mobile Cards (Requirement 35)
+        cardsContainer.innerHTML = filtered.map(c => `
+          <div class="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm space-y-2 cursor-pointer row-view-customer" data-id="${c.id}">
+            <div class="flex items-center justify-between">
+              <h4 class="font-bold text-slate-900 text-sm">${c.name}</h4>
+              <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold ${c.customer_type === 'Local' ? 'bg-indigo-50 text-indigo-700' : 'bg-amber-50 text-amber-700'}">
+                ${c.customer_type}
+              </span>
+            </div>
+            <div class="flex items-center justify-between text-xs text-slate-600">
+              <span class="font-mono text-slate-700">${maskPhone(c.mobile)}</span>
+              <span class="font-bold text-emerald-600 text-sm">₹${Number(c.bill_amount).toLocaleString('en-IN')}</span>
+            </div>
+            <div class="flex items-center justify-between text-[11px] pt-1 border-t border-slate-100">
+              <span class="${c.marketing_consent ? 'text-emerald-700 font-semibold' : 'text-slate-400'}">
+                ${c.marketing_consent ? 'Consent Given' : 'No Consent'}
+              </span>
+              <span class="text-slate-400">${c.date}, ${c.time}</span>
+            </div>
+          </div>
+        `).join('');
+
+        // Customer Detail modal click
+        document.querySelectorAll('.row-view-customer, .btn-view-cust').forEach(el => {
+          el.addEventListener('click', (e) => {
+            const id = el.getAttribute('data-id');
+            const target = Store.getCustomers().find(x => x.id === id);
+            if (target) Modal.openCustomerModal(target);
+          });
+        });
+      }
+
+      // Filter chips
+      document.querySelectorAll('.filter-chip').forEach(chip => {
+        chip.addEventListener('click', () => {
+          document.querySelectorAll('.filter-chip').forEach(c => {
+            c.classList.remove('bg-indigo-50', 'text-indigo-600', 'font-bold');
+            c.classList.add('text-slate-600');
+          });
+          chip.classList.add('bg-indigo-50', 'text-indigo-600', 'font-bold');
+          chip.classList.remove('text-slate-600');
+          currentFilter = chip.getAttribute('data-filter');
+          renderList();
+        });
+      });
+
+      searchInput.addEventListener('input', renderList);
+      renderList();
+
+      // Export CSV
+      btnExport.addEventListener('click', () => {
+        const list = Store.getCustomers(restSlug);
+        if (list.length === 0) {
+          Toast.error('No customers to export.');
+          return;
+        }
+
+        let csv = '\uFEFFName,Mobile,Customer Type,Bill Amount,Marketing Consent,Date,Time\n';
+        list.forEach(c => {
+          csv += `"${c.name}","+91 ${c.mobile}","${c.customer_type}","${c.bill_amount}","${c.marketing_consent ? 'Yes' : 'No'}","${c.date}","${c.time}"\n`;
+        });
+
+        const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `Chaudhary_Cafe_Customers_${new Date().toISOString().split('T')[0]}.csv`;
+        a.click();
+        URL.revokeObjectURL(url);
+        Toast.success('Customer CSV exported.');
+      });
+    });
+  </script>
+</body>
+</html>
