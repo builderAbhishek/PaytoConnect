@@ -1,0 +1,16 @@
+# Logs and temp files
+*.log
+error.log
+
+# Local test databases
+smartqr.sqlite
+*.db
+
+# Operating System files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE files
+.vscode/
+.idea/
